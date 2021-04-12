@@ -1,0 +1,4 @@
+# This DLL contains just the evenlog message IDs for Puppet messages; it has
+# been part of the source since 2.7.14. The DLL source is provided in
+# ext/windows/eventlog/puppetres.mc
+source-contains-prebuilt-windows-binary ext/windows/eventlog/puppetres.dll

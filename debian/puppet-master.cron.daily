@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -e /var/lib/puppet/reports ] ; then
+	find /var/lib/puppet/reports -maxdepth 2 -type f -ctime +30 -delete
+fi
+
+exit 0

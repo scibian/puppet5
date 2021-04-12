@@ -1,0 +1,11 @@
+[Unit]
+Description=Puppet agent
+Documentation=man:puppet-agent(8)
+
+[Service]
+Type=forking
+PIDFile=/run/puppet/agent.pid
+ExecStart=/usr/bin/puppet agent
+
+[Install]
+WantedBy=multi-user.target

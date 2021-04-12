@@ -1,0 +1,20 @@
+Test-Command: cd debian/tests && rspec spec/puppet/*_spec.rb
+Depends: puppet,ruby-serverspec
+Restrictions: needs-root,isolation-container
+
+Test-Command: cd debian/tests && rspec spec/puppet-master/*_spec.rb
+Depends: puppet-master,ruby-serverspec
+Restrictions: needs-root,isolation-container
+
+Test-Command: cd debian/tests && rspec spec/puppet-master-passenger/*_spec.rb
+Depends: puppet-master-passenger,ruby-serverspec,curl
+Restrictions: needs-root,isolation-container
+
+Test-Command: cd debian/tests && ./service-setup systemd && rspec spec/service-systemd/*_spec.rb
+Depends: puppet, systemd-sysv, ruby-serverspec
+Restrictions: needs-root, isolation-container
+
+## Disabled; there's currently no way to reliably switch init systems on the fly
+# Test-Command: cd debian/tests && ./service-setup sysvinit && rspec spec/service-sysvinit/*_spec.rb
+# Depends: puppet, sysvinit-core, ruby-serverspec
+# Restrictions: needs-root, isolation-container, needs-reboot

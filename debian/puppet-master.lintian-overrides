@@ -1,0 +1,2 @@
+# Additional calls to handle puppetmaster -> puppet-master migration
+puppet-master: duplicate-updaterc.d-calls-in-postinst puppet-master

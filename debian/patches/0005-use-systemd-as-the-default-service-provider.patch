@@ -1,0 +1,20 @@
+Author: Apollon Oikonomopoulos <apoikos@debian.org>
+Description: Mark systemd as the default service provider for Debian
+ Currently systemd is marked as the default service provider only for Jessie.
+ Instead of extending this to Stretch, mark it as the default for Debian and
+ let the provider confinement blacklist systemd if /run/systemd/system does not
+ exist.
+Last-Update: 2017-02-09
+--- a/lib/puppet/provider/service/systemd.rb
++++ b/lib/puppet/provider/service/systemd.rb
+@@ -24,8 +24,8 @@
+   defaultfor :osfamily => :suse
+   defaultfor :osfamily => :coreos
+   defaultfor :operatingsystem => :amazon, :operatingsystemmajrelease => ["2"]
+-  defaultfor :operatingsystem => :debian, :operatingsystemmajrelease => ["8", "stretch/sid", "9", "buster/sid"]
+-  defaultfor :operatingsystem => :ubuntu, :operatingsystemmajrelease => ["15.04","15.10","16.04","16.10","17.04","17.10","18.04"]
++  defaultfor :operatingsystem => :debian
++  defaultfor :operatingsystem => :ubuntu
+   defaultfor :operatingsystem => :cumuluslinux, :operatingsystemmajrelease => ["3"]
+ 
+   def self.instances

@@ -1,0 +1,2 @@
+ext/rack/example-passenger-vhost.conf /usr/share/puppet-master-passenger
+ext/rack/config.ru /usr/share/puppet/rack/puppet-master

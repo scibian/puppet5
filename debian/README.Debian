@@ -1,0 +1,12 @@
+puppet for Debian
+------------------
+
+The puppet agent service is disabled by default on new installations. To enable
+the service after installation, run
+
+ `systemctl enable puppet.service' or `update-rc.d puppet enable'
+
+If you rely on other means for running puppet agent (e.g. cron), you should
+leave the service disabled.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 08 Feb 2017 19:16:29 +0200

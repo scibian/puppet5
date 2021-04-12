@@ -1,0 +1,112 @@
+Source: puppet
+Section: admin
+Priority: optional
+Maintainer: Puppet Package Maintainers <pkg-puppet-devel@lists.alioth.debian.org>
+Uploaders: Micah Anderson <micah@debian.org>,
+ Andrew Pollock <apollock@debian.org>,
+ Stig Sandbeck Mathisen <ssm@debian.org>,
+ Apollon Oikonomopoulos <apoikos@debian.org>
+Build-Depends:
+ debhelper (>= 11),
+ facter,
+ rake,
+ hiera,
+ ronn,
+ yard,
+Standards-Version: 4.3.0
+Vcs-Git: https://salsa.debian.org/puppet-team/puppet.git
+Vcs-Browser: https://salsa.debian.org/puppet-team/puppet
+Homepage: https://github.com/puppetlabs/puppet
+
+Package: puppet
+Architecture: all
+Depends: ${misc:Depends},
+ adduser,
+ facter,
+ ruby-augeas,
+ hiera,
+ init-system-helpers (>= 1.50),
+ lsb-base,
+ ruby | ruby-interpreter,
+ ruby-deep-merge,
+ ruby-shadow,
+Recommends:
+ debconf-utils,
+ lsb-release,
+ ruby-selinux,
+Suggests: ruby-rrd, ruby-hocon
+Breaks: puppet-common (<< 4.5.1-1),
+        puppetmaster-common (<< 4.4.2-1~),
+        puppet-agent (<< 4.8.1-3~),
+        facter (<< 2.4.0~),
+        ruby-gettext-setup (<< 0.17)
+Replaces: puppet-common (<< 4.5.1-1),
+        puppetmaster-common (<< 4.4.2-1~)
+Description: configuration management system
+ Puppet is a configuration management system that allows you to define
+ the state of your IT infrastructure, then automatically enforces the
+ correct state.
+ .
+ This package contains the puppet agent software and documentation.
+ .
+ To install and configure a puppet master, install one of the
+ "puppet-master" or "puppet-master-passenger" packages.
+
+Package: puppet-master
+Architecture: all
+Depends: ${misc:Depends},
+ puppet (= ${source:Version}),
+ ruby | ruby-interpreter,
+ lsb-base (>= 3.0-6),
+Breaks: puppetmaster (<< 4.8.1-3)
+Replaces: puppetmaster (<< 4.8.1-3)
+Description: configuration management system, master service
+ Puppet is a configuration management system that allows you to define
+ the state of your IT infrastructure, then automatically enforces the
+ correct state.
+ .
+ This package contains the "puppet-master" service and init script,
+ which is suitable for small deployments. For larger deployments or if you wish
+ to support Puppet 3 clients, puppet-master-passenger should be used instead.
+
+Package: puppetmaster
+Section: oldlibs
+Architecture: all
+Depends: ${misc:Depends}, puppet-master
+Description: configuration management system, master service - transitional package
+ This is a transitional package, superseded by puppet-master. It can safely be
+ removed.
+
+Package: puppet-master-passenger
+Architecture: all
+Depends: ${misc:Depends},
+ apache2,
+ libapache2-mod-passenger,
+ lsb-base,
+ puppet (= ${source:Version}),
+ ruby | ruby-interpreter,
+Breaks: puppetmaster-passenger (<< 4.4.0-1)
+Replaces: puppetmaster-passenger (<< 4.4.0-1)
+Description: configuration management system, scalable master service
+ Puppet is a configuration management system that allows you to define
+ the state of your IT infrastructure, then automatically enforces the
+ correct state.
+ .
+ This package provides configuration for apache2 with mod_passenger,
+ suitable for large deployments. This offers better scalability than
+ the "puppet-master" package.
+
+Package: puppetmaster-passenger
+Section: oldlibs
+Architecture: all
+Depends: ${misc:Depends}, puppet-master-passenger
+Description: configuration management system, scalable master service - transitional package
+ This is a transitional package, superseded by puppet-master-passenger. It can
+ safely be removed.
+
+Package: puppet-common
+Depends: puppet, ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: transitional dummy package
+ This is a transitional dummy package. It can safely be removed.

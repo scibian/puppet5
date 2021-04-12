@@ -1,0 +1,35 @@
+From: Apollon Oikonomopoulos <apoikos@debian.org>
+Date: Sun, 10 Mar 2019 01:22:29 +0200
+Subject: Avoid BigDecimals when loading JSON using Oj
+
+This is already done for JrJackson and needs to be done for Oj as well
+to avoid sending malformed reports to PuppetDB.
+
+Bug-Debian: https://bugs.debian.org/923976
+---
+ lib/puppet/util/json.rb | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/lib/puppet/util/json.rb b/lib/puppet/util/json.rb
+index 6baea59..ba2491b 100644
+--- a/lib/puppet/util/json.rb
++++ b/lib/puppet/util/json.rb
+@@ -32,13 +32,16 @@ module Puppet::Util
+     def self.load(string, options = {})
+       if defined? MultiJson
+         begin
+-          # This ensures that JrJackson will parse very large or very small
++          # This ensures that JrJackson and Oj will parse very large or very small
+           # numbers as floats rather than BigDecimals, which are serialized as
+           # strings by the built-in JSON gem and therefore can cause schema errors,
+           # for example, when we are rendering reports to JSON using `to_pson` in
+           # PuppetDB.
+-          if MultiJson.adapter.name == "MultiJson::Adapters::JrJackson"
++          case MultiJson.adapter.name
++          when "MultiJson::Adapters::JrJackson"
+             options[:use_bigdecimal] = false
++          when "MultiJson::Adapters::Oj"
++            options[:bigdecimal_load] = :float
+           end
+ 
+           MultiJson.load(string, options)

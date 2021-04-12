@@ -1,0 +1,134 @@
+puppet (4.8.2-2) unstable; urgency=high
+
+  As of 4.8.2-2, the puppet service is not enabled by default on new
+  installations and has to be manually enabled using
+
+          systemctl enable puppet.service
+  or
+          update-rc.d puppet enable
+
+  if desired. Note that upgrades from previous puppet versions are not
+  affected by this change and will preserve the service status.
+
+  Since some versions of the package shipped with the service enabled by
+  default, if you are upgrading please check and make sure that the service on
+  your system is properly enabled or disabled to match your preference.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 08 Feb 2017 17:43:52 +0200
+
+puppet (4.8.1-2) unstable; urgency=medium
+
+  The Ruby Puppet master as shipped in Debian can currently handle Puppet 3.x
+  clients only when run under a rack-enabled web server. If you are using the
+  standalone (WEBrick) puppet master from the puppetmaster package and want to
+  support Puppet 3.x clients, please switch to using puppet-master-passenger
+  instead.
+
+  As always, you should upgrade the Puppet master first, and the clients
+  afterwards. Puppet 4.x clients will not work against a Puppet 3.x master.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 11 Jan 2017 18:19:34 +0200
+
+puppet (4.5.0-2) experimental; urgency=medium
+
+  This is a major update of puppet, with significant changes from Puppet 3.
+  Upgrade with care.
+
+  Before you upgrade: A detailed list of what to do before upgrading to this
+  version of puppet is available at
+  https://docs.puppet.com/puppet/4.5/reference/upgrade_major_pre.html
+
+  A summary of important changes:
+
+    - Language changes: The puppet 4 language has a lot of new features, and
+      is not entirely backwards compatible with puppet 3.
+
+      You will likely need to test and change your puppet code, and verify
+      that any modules you use are compatible with the Puppet 4 language.
+
+    - Code directory: A "codedir" configuration setting is introduced as the
+      root directory for puppet code. The default in Debian is
+      "/etc/puppet/code".
+
+      This is configurable by setting "codedir = /path/to/elsewhere" under
+      "[main]" in /etc/puppet/puppet.conf
+
+    - Environment path: Puppet 4 uses directory environments to organize code.
+      By default, the root path for environments is in
+      "$codedir/environments".
+
+      This is configurable by setting "environmentpath = /path/to/somewhere"
+      under "[main]" in /etc/puppet/puppet.conf
+
+      The default "production" environment should be placed in
+      "/etc/puppet/code/environments/production/". Examples are available in
+      "/usr/share/doc/puppet/examples/environments/".
+
+    - Exporting and collecting resources in Puppet 4 requires PuppetDB.  This
+      is not yet packaged in Debian.
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 27 May 2016 20:19:31 +0200
+
+puppet (3.7.2-3) unstable; urgency=medium
+ 
+  The START flag in /etc/default/puppet is since 3.2.4-1 no longer effective.
+  To preserve state across upgrades for old setups where the puppet agent was
+  disabled using the START flag, the agent will be disabled using its built-in
+  disable facility if START is not set to true. In that case, you will need to
+  run "puppet agent --enable" before the agent can connect to a puppet master.
+
+  On systems running the puppet agent via cron, make sure that you do not rely
+  on the START variable in /etc/default/puppet and instead disable the
+  service using update-rc.d or systemctl.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 10 Mar 2015 14:54:15 +0200
+
+puppet (3.2.4-1) unstable; urgency=high
+
+  The puppet agent is now started by default, regardless of init system.
+
+    - On a fresh installation, you will need to run "puppet agent --enable"
+      before it will connect to a puppet master to retrieve its catalog.
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 16 Aug 2013 14:39:55 +0200
+
+puppet (3.1.0-1) experimental; urgency=low
+
+  Puppet 3.x introduces incompatible changes.
+  
+  For the puppet DSL, dynamic variable scoping has been removed. This
+  means that your manifests may need changes to work as intended. See
+  http://docs.puppetlabs.com/guides/scope_and_puppet.html
+
+  Authorization of clients in /etc/puppet/auth.conf now matches client
+  certificate names only. There is a new allow_ip keyword in auth.conf if
+  you want to permit IP addresses.
+
+  For the full list of changes, see:
+  http://projects.puppetlabs.com/projects/puppet/wiki/Release_Notes#3.1.0
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Mon, 04 Mar 2013 08:48:15 +0100
+
+puppet (0.25.4-3) unstable; urgency=low
+
+  The pluginsync=true option is no longer set in the default puppet.conf
+  that is distributed with the package. There is a spurious error that
+  is thrown when this is enabled, and you have no plugins. Most people
+  will eventually want this enabled, however for a new puppet installation
+  it tends to scare people. Given the security implications of pluginsync
+  (it can append to anything in RUBYLIB, not just puppet/facter related
+  things), it is better to have it off by default, and let you decide
+  when you want it enabled.
+
+ -- Micah Anderson <micah@debian.org>  Mon, 15 Mar 2010 18:01:15 -0400
+
+puppet (0.25.4-2) unstable; urgency=low
+
+  The default location of the puppet template directory has been moved to
+  /etc/puppet/templates from /var/lib/puppet/templates.
+  
+  If you use templates in your manifests, please either set "templatedir" in
+  /etc/puppet/puppet.conf to the old location, or move your templates to the new
+  location.
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 14 Feb 2010 15:33:30 +0100
