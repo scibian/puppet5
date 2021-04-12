@@ -1,0 +1,36 @@
+From: Gaudenz Steinlin <gaudenz@debian.org>
+Subject: Use /usr/sbin/service for service management on Debian
+ In Debian jessie systemd will be the default init system. But the old system V
+ and other alternative init systems are still supported. /usr/sbin/service
+ provides an abstraction layer which is able to start, stop and restart
+ services independent of the init system used.
+
+Bug: https://tickets.puppetlabs.com/browse/PUP-2023
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775795
+Comment: Initially for puppet 3.7, ported to puppet 4.8 by Apollon
+ Oikonomopoulos <apoikos@debian.org>
+---
+--- a/lib/puppet/provider/service/debian.rb
++++ b/lib/puppet/provider/service/debian.rb
+@@ -65,6 +65,21 @@
+     update_rc @resource[:name], "defaults"
+   end
+ 
++  # The start, stop, restart and status command use service
++  # this makes sure that these commands work with whatever init
++  # system is installed
++  def startcmd
++    [command(:service), @resource[:name], "start"]
++  end
++
++  def stopcmd
++    [command(:service), @resource[:name], "stop"]
++  end
++
++  def restartcmd
++    (@resource[:hasrestart] == :true) && [command(:service), @resource[:name], "restart"]
++  end
++
+   def statuscmd
+       # /usr/sbin/service provides an abstraction layer which is able to query services
+       # independent of the init system used.

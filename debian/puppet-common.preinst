@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+# Stop puppet agent before removing /usr/bin/puppet on upgrade; otherwise the
+# initscript will fail to stop the service, see #859454.
+if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" lt "4.4.2-1~"; then
+	if [ -x "/etc/init.d/puppet" ]; then
+		invoke-rc.d puppet stop || true
+	fi
+fi
+
+#DEBHELPER#

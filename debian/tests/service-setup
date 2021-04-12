@@ -1,0 +1,122 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "sysvinit" ] && [ -d /run/systemd/system ]; then
+	if [ "$AUTOPKGTEST_REBOOT_MARK" = "sysvinit" ]; then
+		echo "Still running under systemd, but sysvinit requested"
+		exit 1
+	fi
+	apt-get -y install sysvinit-core
+	/tmp/autopkgtest-reboot "sysvinit"
+fi
+
+mkdir -p /etc/systemd/system
+
+if [ -d /run/systemd/system ]; then
+	cat <<-EOF >/etc/systemd/system/dep8-sd-only.service
+		[Unit]
+		Description=Dummy DEP-8 systemd-only service
+
+		[Service]
+		Type=oneshot
+		RemainAfterExit=true
+		ExecStart=/bin/sh -c "echo running > /tmp/dep8-sd-only.status"
+		ExecStop=/bin/rm -f /tmp/dep8-sd-only.status
+
+		[Install]
+		WantedBy=multi-user.target
+	EOF
+fi
+
+cat <<-EOF >/etc/systemd/system/dep8-sd-sysv.service
+	[Unit]
+	Description=Dummy DEP-8 systemd + sysv service
+
+	[Service]
+	Type=oneshot
+	RemainAfterExit=true
+	ExecStart=/bin/sh -c "echo running > /tmp/dep8-sd-sysv.status"
+	ExecStop=/bin/rm -f /tmp/dep8-sd-sysv.status
+
+	[Install]
+	WantedBy=multi-user.target
+EOF
+
+cat <<-EOF > /etc/init.d/dep8-sd-sysv
+	#!/bin/sh
+	# kFreeBSD do not accept scripts as interpreters, using #!/bin/sh and sourcing.
+	if [ true != "\$INIT_D_SCRIPT_SOURCED" ] ; then
+	    set "\$0" "\$@"; INIT_D_SCRIPT_SOURCED=true . /lib/init/init-d-script
+	fi
+	### BEGIN INIT INFO
+	# Provides:          dep8-sd-sysv
+	# Required-Start:    \$remote_fs \$syslog
+	# Required-Stop:     \$remote_fs \$syslog
+	# Default-Start:     2 3 4 5
+	# Default-Stop:      0 1 6
+	# Short-Description: Example initscript
+	# Description:       This file should be used to construct scripts to be
+	#                    placed in /etc/init.d.  This example start a
+	#                    single forking daemon capable of writing a pid
+	#                    file.  To get other behavoirs, implemend
+	#                    do_start(), do_stop() or other functions to
+	#                    override the defaults in /lib/init/init-d-script.
+	### END INIT INFO
+
+	DESC="Dummy DEP-8 systemd + sysv service"
+	DAEMON="none"
+	do_start_cmd_override() {
+		echo "running" > /tmp/dep8-sd-sysv.status
+	}
+
+	do_stop_cmd_override() {
+		rm -f /tmp/dep8-sd-sysv.status
+	}
+
+	do_status() {
+		grep -q "running" /tmp/dep8-sd-sysv.status 2>/dev/null
+		exit \$?
+	}
+EOF
+
+chmod +x /etc/init.d/dep8-sd-sysv
+
+cat <<-EOF > /etc/init.d/dep8-sysv-only
+	#!/bin/sh
+	# kFreeBSD do not accept scripts as interpreters, using #!/bin/sh and sourcing.
+	if [ true != "\$INIT_D_SCRIPT_SOURCED" ] ; then
+	    set "\$0" "\$@"; INIT_D_SCRIPT_SOURCED=true . /lib/init/init-d-script
+	fi
+	### BEGIN INIT INFO
+	# Provides:          dep8-sysv-only
+	# Required-Start:    \$remote_fs \$syslog
+	# Required-Stop:     \$remote_fs \$syslog
+	# Default-Start:     2 3 4 5
+	# Default-Stop:      0 1 6
+	# Short-Description: Example initscript
+	# Description:       This file should be used to construct scripts to be
+	#                    placed in /etc/init.d.  This example start a
+	#                    single forking daemon capable of writing a pid
+	#                    file.  To get other behavoirs, implemend
+	#                    do_start(), do_stop() or other functions to
+	#                    override the defaults in /lib/init/init-d-script.
+	### END INIT INFO
+
+	DESC="Dummy DEP-8 sysv-only service"
+	DAEMON="none"
+	do_start_cmd_override() {
+		echo "running" > /tmp/dep8-sysv-only.status
+	}
+
+	do_stop_cmd_override() {
+		rm -f /tmp/dep8-sysv-only.status
+	}
+
+	do_status() {
+		grep -q "running" /tmp/dep8-sysv-only.status 2>/dev/null
+		exit \$?
+	}
+EOF
+
+chmod +x /etc/init.d/dep8-sysv-only

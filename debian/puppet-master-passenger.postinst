@@ -1,0 +1,96 @@
+#!/bin/sh
+
+set -e
+
+sitename="puppet-master"
+old_sitename="puppetmaster"
+
+APACHE2_SITE_FILE="/etc/apache2/sites-available/${sitename}.conf"
+OLD_APACHE2_SITE_FILE="/etc/apache2/sites-available/${old_sitename}.conf"
+
+# Can be removed when we only support apache >= 2.4
+restart_apache2() {
+    if [ -x "/etc/init.d/apache2" ]; then
+        # Seems that a restart is needed. reload breaks ssl apparently.
+        if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+            invoke-rc.d apache2 restart || exit $?
+        else
+            /etc/init.d/apache2 restart || exit $?
+        fi
+    fi
+}
+
+if [ "$1" = "configure" ]; then
+
+    # Change the owner of the rack config.ru to be the puppet user
+    # because passenger will suid to that user, see #577366
+    if ! dpkg-statoverride --list /usr/share/puppet/rack/puppet-master/config.ru >/dev/null 2>&1
+    then
+        dpkg-statoverride --update --add puppet puppet 0644 /usr/share/puppet/rack/puppet-master/config.ru
+    fi
+
+    # Setup passenger configuration
+    if [ "$2" = "" ]; then
+
+        # Install needed modules
+        if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
+            . /usr/share/apache2/apache2-maintscript-helper
+            apache2_invoke enmod ssl
+            apache2_invoke enmod headers
+        else
+            a2enmod ssl
+            a2enmod headers
+            restart_apache2
+        fi
+
+        # Check that puppet master --configprint works properly
+        if [ $(puppet master --configprint all 2>&1 | grep "Could not parse" | wc -l) != "0" ]; then
+                echo "Puppet config print not working properly, exiting"
+                exit 1
+        fi
+
+        # Initialize the puppet master CA and generate the master
+        # certificate only if the host doesn't already have any puppet
+        # ssl certificate.  The ssl key and cert need to be available
+        # (eg generated) before apache2 is configured and started
+        # since apache2 ssl configuration uses the puppet master ssl
+        # files.
+        if [ ! -e "$(puppet master --configprint hostcert)" ]; then
+            puppet cert generate $(puppet master --configprint certname)
+        fi
+
+        if [ -e "$OLD_APACHE2_SITE_FILE" -a ! -e "$APACHE2_SITE_FILE" ]; then
+            echo "Migrating old puppetmaster-passenger config to $APACHE2_SITE_FILE"
+            sed -e 's|/usr/share/puppet/rack/puppetmasterd|/usr/share/puppet/rack/puppet-master|' \
+                "$OLD_APACHE2_SITE_FILE" > "$APACHE2_SITE_FILE"
+	    # a2invoke dissite won't disable on configure, so use a2dissite instead
+	    a2dissite "$old_sitename"
+            rm -f "$OLD_APACHE2_SITE_FILE"
+        fi
+
+        # Setup apache2 configuration files
+        if  [ ! -e "${APACHE2_SITE_FILE}" ]; then
+            tempfile=$(mktemp)
+            sed -r \
+                -e "s|(SSLCertificateFile\s+).+$|\1$(puppet master --configprint hostcert)|" \
+                -e "s|(SSLCertificateKeyFile\s+).+$|\1$(puppet master --configprint hostprivkey)|" \
+                -e "s|(SSLCACertificateFile\s+).+$|\1$(puppet master --configprint localcacert)|" \
+                -e "s|(SSLCertificateChainFile\s+).+$|\1$(puppet master --configprint localcacert)|" \
+                -e "s|(SSLCARevocationFile\s+).+$|\1$(puppet master --configprint cacrl)|" \
+                -e "/RailsAutoDetect/d" \
+                -e "/RackAutoDetect/d" \
+                -e "s|/etc/puppet/rack|/usr/share/puppet/rack/puppet-master|" \
+                /usr/share/puppet-master-passenger/apache2.site.conf.tmpl > $tempfile
+            mv $tempfile "${APACHE2_SITE_FILE}"
+        fi
+        if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
+            . /usr/share/apache2/apache2-maintscript-helper
+            apache2_invoke ensite "${sitename}"
+        else
+            a2ensite puppet-master
+            restart_apache2
+        fi
+    fi
+fi
+
+#DEBHELPER#

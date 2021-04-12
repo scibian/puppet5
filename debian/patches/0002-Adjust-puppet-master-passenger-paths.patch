@@ -1,0 +1,49 @@
+From: Stig Sandbeck Mathisen <ssm@debian.org>
+Date: Fri, 20 Dec 2013 08:52:29 +0100
+Subject: Adjust puppet master passenger paths
+
+Forwarded: not-needed
+Bug-Debian: http://bugs.debian.org/662866
+---
+ ext/rack/config.ru                    | 11 +++++------
+ ext/rack/example-passenger-vhost.conf |  4 ++--
+ 2 files changed, 7 insertions(+), 8 deletions(-)
+
+--- a/ext/rack/config.ru
++++ b/ext/rack/config.ru
+@@ -14,11 +14,11 @@
+ # Rack applications typically don't start as root.  Set --confdir, --vardir,
+ # --logdir, --rundir to prevent reading configuration from
+ # ~/ based pathing.
+-ARGV << "--confdir" << "/etc/puppetlabs/puppet"
+-ARGV << "--vardir"  << "/opt/puppetlabs/server/data/puppetmaster"
+-ARGV << "--logdir"  << "/var/log/puppetlabs/puppetmaster"
+-ARGV << "--rundir"  << "/var/run/puppetlabs/puppetmaster"
+-ARGV << "--codedir"  << "/etc/puppetlabs/code"
++ARGV << "--confdir" << "/etc/puppet"
++ARGV << "--vardir"  << "/var/lib/puppet"
++ARGV << "--logdir"  << "/var/log/puppet"
++ARGV << "--rundir"  << "/run/puppet"
++ARGV << "--codedir"  << "/etc/puppet/code"
+ 
+ # disable always_retry_plugsin as a performance improvement. This is safe for a master to
+ # apply. This is intended to allow agents to recognize new features that may be
+@@ -41,4 +41,3 @@
+ # we're usually running inside a Rack::Builder.new {} block,
+ # therefore we need to call run *here*.
+ run Puppet::Util::CommandLine.new.execute
+-
+--- a/ext/rack/example-passenger-vhost.conf
++++ b/ext/rack/example-passenger-vhost.conf
+@@ -45,9 +45,9 @@
+         RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
+         RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
+ 
+-        DocumentRoot /etc/puppet/rack/public/
++        DocumentRoot /usr/share/puppet/rack/puppet-master/public/
+         RackBaseURI /
+-        <Directory /etc/puppet/rack/>
++        <Directory /usr/share/puppet/rack/puppet-master/>
+                 Options None
+                 AllowOverride None
+                 Order allow,deny

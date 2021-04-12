@@ -1,0 +1,51 @@
+From: Stig Sandbeck Mathisen <ssm@debian.org>
+Date: Mon, 16 May 2016 12:59:38 +0200
+Subject: Adjust default paths
+
+---
+ lib/puppet/defaults.rb      |  2 +-
+ lib/puppet/util/run_mode.rb | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+--- a/lib/puppet/defaults.rb
++++ b/lib/puppet/defaults.rb
+@@ -1320,7 +1320,7 @@
+         if Puppet::Util::Platform.windows?
+           '$codedir/modules'
+         else
+-          '$codedir/modules:/opt/puppetlabs/puppet/modules'
++          '$codedir/modules:/usr/share/puppet/modules'
+         end
+       end,
+       :type => :path,
+--- a/lib/puppet/util/run_mode.rb
++++ b/lib/puppet/util/run_mode.rb
+@@ -59,23 +59,23 @@
+ 
+     class UnixRunMode < RunMode
+       def conf_dir
+-        which_dir("/etc/puppetlabs/puppet", "~/.puppetlabs/etc/puppet")
++        which_dir("/etc/puppet", "~/.puppet/etc")
+       end
+ 
+       def code_dir
+-        which_dir("/etc/puppetlabs/code", "~/.puppetlabs/etc/code")
++        which_dir("/etc/puppet/code", "~/.puppet/etc/code")
+       end
+ 
+       def var_dir
+-        which_dir("/opt/puppetlabs/puppet/cache", "~/.puppetlabs/opt/puppet/cache")
++        which_dir("/var/cache/puppet", "~/.puppet/cache")
+       end
+ 
+       def run_dir
+-        which_dir("/var/run/puppetlabs", "~/.puppetlabs/var/run")
++        which_dir("/run/puppet", "~/.puppet/var/run")
+       end
+ 
+       def log_dir
+-        which_dir("/var/log/puppetlabs/puppet", "~/.puppetlabs/var/log")
++        which_dir("/var/log/puppet", "~/.puppet/var/log")
+       end
+     end
+ 

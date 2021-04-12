@@ -1,0 +1,29 @@
+Author: Chris Lamb <lamby@debian.org>
+Description: Make the build reproducible
+Bug-Debian: https://bugs.debian.org/891263
+Last-Update: 2018-07-04
+--- a/lib/puppet/defaults.rb
++++ b/lib/puppet/defaults.rb
+@@ -704,7 +704,7 @@
+     # We have to downcase the fqdn, because the current ssl stuff (as opposed to in master) doesn't have good facilities for
+     # manipulating naming.
+     :certname => {
+-      :default => lambda { Puppet::Settings.default_certname.downcase },
++      :default => lambda { ENV.has_key?('SOURCE_DATE_EPOCH') ? '(node\'s fully qualified domain name)' : Puppet::Settings.default_certname.downcase },
+       :desc => "The name to use when handling certificates. When a node
+         requests a certificate from the CA puppet master, it uses the value of the
+         `certname` setting as its requested Subject CN.
+--- a/tasks/manpages.rake
++++ b/tasks/manpages.rake
+@@ -23,6 +23,11 @@
+ 
+   ronn_args = '--manual="Puppet manual" --organization="Puppet, Inc." -r'
+ 
++  unless ENV['SOURCE_DATE_EPOCH'].nil?
++    source_date = Time.at(ENV['SOURCE_DATE_EPOCH'].to_i).strftime('%Y-%m-%d')
++    ronn_args += " --date=#{source_date}"
++  end
++
+   # Locate ronn
+   ronn = %x{which ronn}.chomp
+   unless File.executable?(ronn) then fail("Ronn does not appear to be installed.") end

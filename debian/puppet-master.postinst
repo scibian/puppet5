@@ -1,0 +1,73 @@
+#!/bin/sh
+
+set -e
+
+OLDCONFS="/etc/logrotate.d/puppetmaster /etc/init.d/puppetmaster /etc/default/puppetmaster"
+
+if [ "$1" = "configure" ] && [ -z "$2" ]; then
+    # Check if puppetmaster.service's state file is still around, i.e. if
+    # puppetmaster was installed and has not been purged.
+    if deb-systemd-helper debian-installed puppetmaster.service; then
+        if ! deb-systemd-helper --quiet was-enabled puppetmaster.service; then
+            # This is a "fresh" install, i.e. pulled in as a dependency of
+            # puppetmaster. Skip enabling puppet-master.service if puppetmaster
+            # was not enabled
+            deb-systemd-helper unmask puppet-master.service >/dev/null || true
+            deb-systemd-helper update-state puppet-master.service >/dev/null || true
+            update-rc.d puppet-master defaults >/dev/null || true
+            update-rc.d puppet-master disable >/dev/null || true
+        fi
+        deb-systemd-helper purge puppetmaster.service >/dev/null || true
+        deb-systemd-helper unmask puppetmaster.service >/dev/null || true
+    fi
+
+    # Check if puppetmaster is in the unpacked state
+    if dpkg-query -W --showformat '${Status}\n' puppetmaster | grep -q unpacked; then
+        puppetmaster_state="unpacked"
+    fi
+
+    for conffile in $OLDCONFS; do
+        newname="$(echo $conffile | sed -e 's/puppetmaster/puppet-master/')"
+        to_copy=""
+
+        if [ "$puppetmaster_state" = "unpacked" -a -e "$conffile.dpkg-backup" ]; then
+            # Case 1: puppetmaster is in the unpacked state; we want to see whether
+            # dpkg-maintscript-helper has created a .dpkg-backup
+            to_copy="$conffile.dpkg-backup"
+        elif [ -e "$conffile" ]; then
+            # Case 2: puppetmaster is still around and owns the conffile
+            md5sum="$(md5sum "$conffile" | sed -s 's/ .*//')"
+            old_md5sum="$(dpkg-query -W -f='${Conffiles}' puppetmaster | \
+                            sed -n -e "\'^ $conffile ' { s/ obsolete$//; s/.* //; p }")"
+            if [ -n "$old_md5sum" -a "$md5sum" != "$old_md5sum" ]; then
+                to_copy="$conffile"
+            fi
+        fi
+
+
+        if [ -n "$to_copy" ]; then
+            md5sum="$(md5sum ${newname} | sed -e 's/ .*//')"
+            old_md5sum="$(dpkg-query -W -f='${Conffiles}' puppet-master | \
+                                sed -n -e "\' ${newname} ' { s/ obsolete$//; s/.* //; p }")"
+
+            if [ "$md5sum" = "$old_md5sum" ]; then
+                echo "Preserving user changes from $conffile in $newname; $newname saved as $newname.dpkg-new"
+                if [ -e "$newname" ]; then
+                    mv -f "$newname" "$newname.dpkg-new"
+                fi
+
+                cp "$to_copy" "$newname"
+
+                if [ "$newname" = "/etc/logrotate.d/puppet-master" ]; then
+                    # Migrate logrotate's pkill command to the new process name
+                    sed -i -e 's/pkill \(.*\) -f puppetmasterd/pkill \1 -f "puppet master"/' "$newname"
+                fi
+            fi
+        fi
+    done
+fi
+
+# Purge the old puppetmaster symlinks from /etc/rcX.d
+update-rc.d -f puppetmaster remove >/dev/null || true
+
+#DEBHELPER#

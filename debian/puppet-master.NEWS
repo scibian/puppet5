@@ -1,0 +1,7 @@
+puppet (5.5.10-3) unstable; urgency=medium
+
+  * Add a cron.daily job to clean-up /var/lib/puppet/reports for any report
+    that is older than 30 days to avoid filling-up a puppet-master hard drive
+    until it's full (Closes: #930033).
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 06 Jun 2019 10:24:27 +0200

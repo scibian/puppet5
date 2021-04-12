@@ -1,0 +1,92 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          puppet-master
+# Required-Start:    $network $named $remote_fs $syslog
+# Required-Stop:     $network $named $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: puppet master
+# Description:       The puppet master accepts connections from puppet agents,
+#                    compiles manifests into catalogs for them, acts as a file
+#                    server and report server.
+### END INIT INFO                 
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/puppet
+DAEMON_OPTS=""
+NAME=master
+DESC="puppet master"
+PIDFILE="/run/puppet/${NAME}.pid"
+
+test -x $DAEMON || exit 0
+
+[ -r /etc/default/puppet-master ] && . /etc/default/puppet-master
+
+. /lib/lsb/init-functions
+
+if [ ! -d /run/puppet ]; then
+	mkdir -p /run/puppet
+fi
+
+chown puppet:puppet /run/puppet
+
+is_true() {
+    if [ "x$1" = "xtrue" -o "x$1" = "xyes" -o "x$1" = "x0" ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+start_puppet_master() {
+    if is_true "$START" ; then
+	start-stop-daemon --start --quiet --pidfile "${PIDFILE}" \
+	    --startas $DAEMON -- $NAME $DAEMON_OPTS
+    else
+	echo ""
+	echo "puppet-master not configured to start, please edit /etc/default/puppet-master to enable"
+	status_of_proc -p "${PIDFILE}" "${DAEMON}" "${NAME}"
+    fi
+}
+
+stop_puppet_master() {
+    start-stop-daemon --stop --retry TERM/10/KILL/5 --quiet --oknodo --pidfile "${PIDFILE}"
+}
+
+status_puppet_master() {
+    if [ ! -e "${PIDFILE}" ]; then
+        status_of_proc "${DAEMON}" "${NAME}"
+    else
+        status_of_proc -p "${PIDFILE}" "${DAEMON}" "${NAME}"
+    fi
+}
+
+
+case "$1" in
+    start)
+	log_begin_msg "Starting $DESC"
+	start_puppet_master
+	log_end_msg $?
+	;;
+    stop)
+	log_begin_msg "Stopping $DESC"
+	stop_puppet_master
+	log_end_msg $?
+	;;
+    reload)
+  	# Do nothing, as puppet master rechecks its config automatically
+        ;;
+    status)
+	status_puppet_master
+        ;;
+    restart|force-reload)
+	log_begin_msg "Restarting $DESC"
+	stop_puppet_master
+	start_puppet_master
+	log_end_msg $?
+	;;
+    *)
+	echo "Usage: $0 {start|stop|status|restart|force-reload}" >&2
+	exit 1
+	;;
+esac

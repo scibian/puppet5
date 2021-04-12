@@ -1,0 +1,4 @@
+var/lib/puppet
+var/log/puppet
+var/cache/puppet/state
+usr/share/puppet/modules

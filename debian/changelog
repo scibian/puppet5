@@ -1,0 +1,1588 @@
+puppet (5.5.10-4~bpo9+1sci9u1) scibian9; urgency=medium
+
+  [ Kwame Amedodji ]
+  * Rebuild for stretch-backports.
+
+  [ Kwame AMEDODJI ]
+
+ -- Kwame AMEDODJI <kwame-externe.amedodji@edf.fr>  Mon, 12 Apr 2021 10:20:48 +0200
+
+puppet (5.5.10-4) unstable; urgency=medium
+
+  * Team upload.
+  * Added a puppet-master.NEWS file, as suggested by the release team.
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 17 Jun 2019 11:44:21 +0200
+
+puppet (5.5.10-3) unstable; urgency=medium
+
+  * Team upload.
+  * Add a cron.daily job to clean-up /var/lib/puppet/reports for any report
+    that is older than 30 days to avoid filling-up a puppet-master hard drive
+    until it's full (Closes: #930033).
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 06 Jun 2019 10:24:27 +0200
+
+puppet (5.5.10-2) unstable; urgency=medium
+
+  * Make sure oj does not use BigDecimals on data load (Closes: #923976)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 12 Mar 2019 12:51:05 +0200
+
+puppet (5.5.10-1) unstable; urgency=medium
+
+  * New upstream bugfix release; see
+    https://puppet.com/docs/puppet/5.5/release_notes.html#puppet-5510
+  * Bump Standards-Version to 4.3.0; no changes needed
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 16 Jan 2019 10:56:17 +0200
+
+puppet (5.5.8-1) unstable; urgency=medium
+
+  * New upstream bugfix release; see
+    https://puppet.com/docs/puppet/5.5/release_notes.html#puppet-557 and
+    https://puppet.com/docs/puppet/5.5/release_notes.html#puppet-558
+  * d/watch: only look for Puppet 5 versions for the time being
+  * Override the source-contains-prebuilt-windows-binary lintian tag for
+    ext/windows/eventlog/puppetres.dll. The DLL source is provided in
+    ext/windows/eventlog/puppetres.mc.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 09 Nov 2018 09:33:05 +0200
+
+puppet (5.5.6-1) unstable; urgency=medium
+
+  * New upstream bugfix release; see
+    https://puppet.com/docs/puppet/5.5/release_notes.html#puppet-556
+  * Bump Standards-Version to 4.2.1; no changes needed
+  * Refresh patches
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 29 Aug 2018 09:35:46 +0300
+
+puppet (5.5.3-1) unstable; urgency=medium
+
+  * New upstream bugfix release
+  * Refresh patches
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 23 Jul 2018 23:39:45 +0300
+
+puppet (5.5.2-2) unstable; urgency=medium
+
+  * Build-Depend on ronn instead of ruby-ronn (Closes: #903290)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 08 Jul 2018 22:14:10 +0300
+
+puppet (5.5.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * Refresh patches
+  * Bump Standards-Version to 4.1.5; no changes needed
+  * autopkgtest: completely disable the sysvinit tests, as I've found no
+    reliable way of switching the testbed's init system on the fly
+  * reproducible-build.patch: pass SOURCE_DATE_EPOCH to ronn
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 05 Jul 2018 16:17:42 +0300
+
+puppet (5.4.0-2) unstable; urgency=medium
+
+  * Switch Vcs-* URLs to salsa
+  * Ensure the package builds reproducibly.
+    Patch by Chris Lamb, thanks! (Closes: #891263)
+  * Add Breaks against ruby-gettext-setup (<< 0.17), see #892737 for details.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 13 Mar 2018 10:54:34 +0200
+
+puppet (5.4.0-1) unstable; urgency=medium
+
+  * New upstream release (closes: #889527, #890268); see
+    https://docs.puppet.com/puppet/5.2/release_notes.html,
+    https://docs.puppet.com/puppet/5.3/release_notes.html and
+    https://docs.puppet.com/puppet/5.4/release_notes.html for more information
+    + Refresh patches
+    + Includes fixes for CVE-2017-10689 (closes: #890412) and CVE-2017-10690
+      (closes: #890440)
+  * Upload to unstable
+  * Bump Standards-Version to 4.1.3; no changes needed
+  * Bump dh compat level to 11
+  * puppet: use update-rc.d defaults-disabled via dh_installinit
+  * d/control: drop redundant Testsuite field
+  * d/control: drop all Priority: extra references
+  * d/control: drop obsolete dependencies on ruby-rgen and ruby-safe-yaml
+  * d/watch: switch URL to https://
+  * d/copyright: bump debian/ years
+  * Regenerate the manpages on build (closes: #877066)
+    + Build-Depend on yard and ruby-ronn
+  * Remove Nigel from Uploaders. Thanks for your work!
+  * autopkgtest: mark the sysvinit test as isolation-machine;
+    isolation-container (at least with LXC) does not allow rebooting with a
+    new init system.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 22 Feb 2018 23:45:43 +0200
+
+puppet (5.1.0-1) experimental; urgency=medium
+
+  * New upstream release; see
+    https://docs.puppet.com/puppet/5.0/release_notes.html and
+    https://docs.puppet.com/puppet/5.1/release_notes.html for more
+    information.
+    + Drop fix-puppet-master-logcheck-rule.patch
+    + Refresh remaining patches
+    + Do not install extlookup2hiera, it has been removed upstream
+  * Suggest ruby-hocon for HOCON support in Hiera 5.
+  * Bump Standards to 4.1.0; no changes needed.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 05 Sep 2017 15:19:10 +0300
+
+puppet (4.10.4-2) unstable; urgency=medium
+
+  * Set locale load path to /usr/share/puppet/locale (Closes: #866972)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 03 Jul 2017 17:23:23 +0300
+
+puppet (4.10.4-1) unstable; urgency=medium
+
+  * New upstream version; see
+    https://docs.puppet.com/puppet/4.10/release_notes.html and
+    https://docs.puppet.com/puppet/4.9/release_notes.html for more
+    information.
+  * Bump compat to 10 and B-D on debhelper (>= 10).
+  * Bump Standards to 4.0.0; no changes needed.
+  * Refresh the systemd service provider patch and use systemd as the default
+    service provider in Ubuntu as well, to reduce delta with the Ubuntu
+    packages.
+  * Drop CVE-2017-2295.patch, fixed upstream.
+  * Install locale data under /usr/share/puppet/locale.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 27 Jun 2017 16:20:34 +0300
+
+puppet (4.8.2-5) unstable; urgency=high
+
+  * master: accept facts only in PSON format (CVE-2017-2295) (Closes:
+    #863212).
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 23 May 2017 23:17:46 +0300
+
+puppet (4.8.2-4) unstable; urgency=medium
+
+  * Handle creation and removal of /var/cache/puppet/state (Closes: #855923)
+  * Add Breaks against old facter versions; facter before 2.4.0 uses a
+    deprecated Puppet settings API making `facter --puppet` no longer work with
+    Puppet 4.
+  * puppet-common: stop the puppet service in preinst when upgrading from
+    Puppet 3. Fixes upgrade on sysvinit systems running the puppet agent.
+    (Closes: #859454)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 28 Apr 2017 17:38:26 +0300
+
+puppet (4.8.2-3) unstable; urgency=medium
+
+  * Mark systemd as the default service provider for Debian. If the system is
+    not running on systemd, puppet will automatically fall back to the
+    "debian" service provider.
+  * Again patch the "debian" service provider as in 3.7.2-3, to strip the
+    sysv-rc check (Closes: #854680) and use systemctl to enable/disable
+    services on systemd-booted systems.
+  * Use /usr/sbin/service for starting/stopping/restarting services in the
+    debian provider, to ensure the provider works with all init systems and
+    does not call the initscripts directly. Patch by Gaudenz Steinlin,
+    originally included in 3.7.2-2.
+  * Add DEP-8 tests for basic operations on services (enable/disable,
+    start/stop) backed by initscripts and/xor systemd units, on both systemd
+    and sysvinit, with all applicable providers (default, systemd and debian).
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 15 Feb 2017 14:23:21 +0200
+
+puppet (4.8.2-2) unstable; urgency=high
+
+  * Do not enable the puppet service by default on fresh installs
+    (Closes: #854487).
+    + Preserve the agent lock on upgrade from 3.x to safeguard upgrades from
+      Jessie systems where puppet was installed but never used.
+  * Update the DEP-8 tests to check that the service is disabled.
+  * Strip the agent locking logic from puppet.preinst now that we disable the
+    service by default.
+  * Add a debian/NEWS entry documenting the disabled service.
+  * Update the information in README.Debian and remove the (now obsolete)
+    paragraph about stored configs.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 08 Feb 2017 15:24:55 +0200
+
+puppet (4.8.2-1) unstable; urgency=medium
+
+  * New upstream bugfix release.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 23 Jan 2017 14:39:14 +0200
+
+puppet (4.8.1-3) unstable; urgency=medium
+
+  * puppet-master: handle puppetmaster service and conffile rename
+    + try to preserve puppetmaster.service's state in puppet-master.service
+    + migrate user changes from puppetmaster's config files
+  * puppetmaster: drop all configfiles using dpkg-maintscript-helper
+  * Drop the puppet-agent package (Closes: #826730, #827867)
+    + Rename the puppet-agent service back to puppet and preserve state on
+      upgrades
+  * puppet-master: point to puppet-master-passenger for Puppet 3 support in
+    extended description
+  * puppet-master-passenger: migrate the apache2 site from
+    puppetmaster-passenger installations
+  * puppet: add missing Breaks/Depends against puppetmaster-common
+  * puppet: remove extra license file
+  * d/copyright: update copyright information
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 18 Jan 2017 21:57:44 +0200
+
+puppet (4.8.1-2) unstable; urgency=medium
+
+  * Add transitional packages for puppetmaster and puppetmaster-passenger.
+  * Add Puppet 3 client compatibility when the master is run under a
+    rack server (Closes: #832536). Input by James Cowgill and Christos
+    Trochalakis, thanks!
+  * Add DEP-8 tests for Puppet 3 client compatibility using serverspec.
+  * Add a NEWS entry documenting Puppet 3 client compatibility.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 11 Jan 2017 20:22:17 +0200
+
+puppet (4.8.1-1) unstable; urgency=medium
+
+  * Imported upstream release 4.8.1 (Closes: #844414)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 30 Nov 2016 20:24:55 +0100
+
+puppet (4.8.0-1) unstable; urgency=medium
+
+  * Imported upstream release 4.8.0
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 02 Nov 2016 21:17:39 +0100
+
+puppet (4.7.0-1) unstable; urgency=medium
+
+  * Imported upstream release 4.7.0
+  * Add dependency on lsb-base for init scripts
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 01 Nov 2016 20:49:34 +0100
+
+puppet (4.5.2-1) unstable; urgency=medium
+
+  * Imported upstream release 4.5.2
+  * Install missing examples from debian/examples
+  * Add transitional package puppet-common
+  * Fix missing rewrite in default paths patch (Closes: #826745)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 17 Jun 2016 23:50:03 +0200
+
+puppet (4.5.0-4) unstable; urgency=medium
+
+  * Prevent a purge of puppet-common from deleting /var/lib/puppet
+    (Closes: #825719)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 29 May 2016 12:53:04 +0200
+
+puppet (4.5.0-3) unstable; urgency=medium
+
+  * Upload puppet 4.5.0-3 to Debian unstable (Closes: #798636)
+  * Summary of changes since puppet 3.8.5-2 (last version in unstable):
+    * New package names:
+      * "puppet" contains the puppet software.
+      * "puppet-agent", "puppet-master" and "puppet-master-passenger" starts
+        services.
+      * "vim-puppet" and "puppet-el" have been removed, and will be repackaged
+        from separate sources.
+    * activerecord stored configurations is no longer supported
+    * etckeeper integration is no longer installed by default
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 28 May 2016 13:34:25 +0200
+
+puppet (4.5.0-2) experimental; urgency=medium
+
+  * Changes for hiera:
+    * Use /etc/puppet/hiera.yaml as configuration file
+    * Use /etc/puppet/code/hiera/ as default datadir
+  * Update debian/NEWS
+  * Add an example environment
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 27 May 2016 22:13:59 +0200
+
+puppet (4.5.0-1) experimental; urgency=medium
+
+  * Imported upstream release 4.5.0
+  * Set default basemodulepath to include /usr/share/puppet/modules
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 20 May 2016 20:09:20 +0200
+
+puppet (4.4.2-1) experimental; urgency=medium
+
+  * Imported upstream release 4.4.2
+  * New package names
+  * Removed activerecord stored configurations
+  * Removed default etckeeper integration
+  * Removed packages vim-puppet, puppet-el, puppet-testsuite
+  * Add an initial hiera.yaml
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 18 May 2016 22:57:49 +0200
+
+puppet (3.8.5-2) unstable; urgency=medium
+
+  * [7b9bf62] sysvinit: fix service restart.
+    Thanks to Martin Pitt (Closes: #818267)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 15 Mar 2016 12:28:44 +0100
+
+puppet (3.8.5-1) unstable; urgency=medium
+
+  * Imported upstream release 3.8.5
+  * [0a2d3bc] autopkgtest: remove passenger/agent test
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 28 Jan 2016 10:44:16 +0100
+
+puppet (3.8.4-1) unstable; urgency=medium
+
+  * Imported upstream release 3.8.4 (CVE-2015-7328)
+  * [7d7519b] Make the puppetmaster init script return a useful error code
+    when disabled (Closes: #734852)
+  * [81eb77c] Make the puppetmaster init script return error code 3 code for
+    status when pidfile is missing (Closes: #738465)
+  * [d4ecb19] Be consistent with /run/puppet permissions (Closes: #781791)
+  * [d836fef] Use /run/puppet instead of /var/run/puppet
+  * [f9d9548] puppet-common: depend on ruby-rgen (Closes: #761385)
+  * [7ddba0a] Drop suggestion for transitional package librrd-ruby
+  * [171a701] autopkgtest: Restrict the current tests to need
+    isolation-container
+  * [17c7dbb] autopkgtest: Rename current tests to large.*
+  * [d02c2d8] autopkgtest: Add small tests
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 06 Nov 2015 14:29:02 +0100
+
+puppet (3.8.3-1) unstable; urgency=medium
+
+  * Imported upstream release 3.8.3
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 03 Oct 2015 00:08:29 +0200
+
+puppet (3.8.2-1) unstable; urgency=medium
+
+  * Imported upstream release 3.8.1
+  * Imported upstream release 3.8.2
+  * [188e76d] refresh patches with gbp pq
+  * [c772e65] Fix puppetmaster logrotate bug (Closes: #780847)
+  * [f116751] Import patch to fix non-ASCII user comment (Closes: #782494)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 29 Aug 2015 21:14:23 +0200
+
+puppet (3.7.2-5) unstable; urgency=medium
+
+  [ Jonas Genannt ]
+  * d/control: switched ruby-hiera to hiera (Closes: #781664)
+
+  [ Apollon Oikonomopoulos ]
+  * d/control: add myself to Uploaders
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 03 Jun 2015 10:34:41 +0300
+
+puppet (3.7.2-4) unstable; urgency=medium
+
+  * Team upload.
+  * Fix service enable with new initscripts under sysvinit (Closes: #781512).
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 30 Mar 2015 12:37:07 +0300
+
+puppet (3.7.2-3) unstable; urgency=medium
+
+  [ Apollon Oikonomopoulos ]
+  * Team upload.
+  * Fix service enable/disable in the Debian service provider (Closes: #775795)
+  * Fix stored configs with ActiveRecord 4.x (Closes: #774643)
+    + puppetmaster-common: add Recommends for stored configs
+    + Mention stored configs dependencies in README.Debian. Also add a
+      note for the deprecation of AR-based stored configs.
+  * Preserve and honor changes in /etc/default/puppet (Closes: #778891)
+    + Do not remove /etc/default/puppet on upgrade
+    + Disable the agent when upgrading and START != yes
+    + puppet.service: pass $DAEMON_OPTS to puppet agent. Thanks to Rik Theys!
+    + Add a NEWS note about the START flag
+
+  [ Stig Sandbeck Mathisen ]
+  * Add upstream metadata
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 10 Mar 2015 14:33:45 +0200
+
+puppet (3.7.2-2) unstable; urgency=medium
+
+  [ Gaudenz Steinlin ]
+  * [558cce5] Use /usr/sbin/service in the Debian service provider
+    (Closes: #775795)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 05 Feb 2015 22:44:49 +0100
+
+puppet (3.7.2-1) unstable; urgency=medium
+
+  * Imported upstream release 3.7.2
+  * Declare compliance with Debian Policy 3.9.6
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 24 Oct 2014 13:47:15 +0200
+
+puppet (3.7.1-1) unstable; urgency=medium
+
+  * Imported upstream release 3.7.1
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 16 Sep 2014 11:10:04 +0200
+
+puppet (3.7.0-1) unstable; urgency=medium
+
+  * Imported upstream release 3.7.0 (CVE-2014-3248, CVE-2014-3250)
+  * Do not install vendored "rgen"
+  * debian/copyright: update
+  * debian/control:
+    - Update vcs browse url
+    - Set "Testsuite:" header
+    - Update package descriptions
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 07 Sep 2014 15:03:57 +0200
+
+puppet (3.6.1-1) unstable; urgency=medium
+
+  * Import upstream release 3.6.1
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Mon, 26 May 2014 09:55:10 +0200
+
+puppet (3.6.0-1) unstable; urgency=medium
+
+  * Import upstream release 3.6.0
+  * Remove deprecated global file/template locations
+  * Move ruby-selinux from Suggests to Recommends (Closes: #743790)
+  * Add build dependency on ruby-hiera
+  * puppet-el: match .pp suffix at end of string, not end of line.
+    Thanks to Kevin Ryde (Closes: #670330)
+  * puppet-el: Conform to emacs policy
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 16 May 2014 00:14:33 +0200
+
+puppet (3.5.1-1) unstable; urgency=medium
+
+  * Imported upstream release 3.5.1
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 17 Apr 2014 14:50:28 +0200
+
+puppet (3.4.3-1) unstable; urgency=medium
+
+  [ Jonas Genannt ]
+  * [57515db] d/control: added ruby-rrd as primary Suggests, left librrd-ruby
+    for easy backporting.
+
+  [ Stig Sandbeck Mathisen ]
+  * Imported upstream release 3.4.3
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 20 Feb 2014 11:41:42 +0100
+
+puppet (3.4.2-1) unstable; urgency=medium
+
+  * Imported upstream release 3.4.2
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 07 Jan 2014 12:04:39 +0100
+
+puppet (3.4.1-1) unstable; urgency=high
+
+  * Imported upstream release 3.4.1 (CVE-2013-4969)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 26 Dec 2013 23:43:56 +0100
+
+puppet (3.4.0-1) unstable; urgency=medium
+
+  * Imported upstream release 3.4.0
+    - Update puppetmaster passenger template source path
+    - Refresh quilt patches
+  * Include upstream provided puppet ldap schema (Closes: #730627)
+  * Update dependencies: add ruby-rgen and ruby-rack
+    - have puppet-testsuite recommend ruby-rgen until it has passed NEW
+  * Make uscan verify new upstream versions automatically with GnuPG
+  * Update DEP-8 tests, use sharness
+  * Bump standards version (no changes)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 20 Dec 2013 10:20:39 +0100
+
+puppet (3.3.1-1) unstable; urgency=low
+
+  * Imported upstream release 3.3.1
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 08 Oct 2013 09:32:30 +0200
+
+puppet (3.3.0-1) unstable; urgency=low
+
+  * Imported upstream release 3.3.0
+  * Move dependency on ruby-hiera from puppetmaster-common to puppet-common
+    (Closes: #712780)
+  * Drop "duplicate-resource" patch included in current upstream version
+  * debian/control: Clean up old dependencies, remove unused headers
+  * Improve systemd packaging, use dh-systemd.
+    Thanks to Michael Stapelberg (Closes: #714202)
+  * Use "puppet master" to retrieve configuration for puppetmaster-passenger
+    (Closes: #722614)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 15 Sep 2013 14:51:22 +0200
+
+puppet (3.2.4-2) unstable; urgency=low
+
+  * Include patch from upstream to prevent duplicate nagios_ resources
+    (Closes: #721132)
+  * Add empty /usr/share/puppet/modules to puppet-common for puppet modules
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 01 Sep 2013 13:41:51 +0200
+
+puppet (3.2.4-1) unstable; urgency=high
+
+  [ Micah Anderson ]
+  * Change dependency on libaugeas-ruby to ruby-augeas (Closes: #719424)
+
+  [ Stig Sandbeck Mathisen ]
+  * Imported upstream version 3.2.4 (CVE-2013-4956, CVE-2013-4761)
+  * Start puppet agent by default, to reflect systemd configuration
+    * …but disable puppet agent on initial install
+    * Add dep8 tests for initially disabled puppet agent
+  * Remove deprecated passenger options
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 16 Aug 2013 16:47:28 +0200
+
+puppet (3.2.3-1) unstable; urgency=low
+
+  * Import upstream version 3.2.3
+  * Do not use "dpkg-maintscript-helper" on non-conffiles
+    (Closes: #713070)
+  * Bump standards version (no changes)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 02 Aug 2013 23:07:48 +0200
+
+puppet (3.2.2-1) unstable; urgency=high
+
+  * New upstream version (Closes: #712745, CVE-2013-3567)
+    - use packaged ruby-safe-yaml instead of the vendored gem
+  * Support apache 2.4 (Closes: #675409)
+  * Remove dependency on rails (Closes: #709636)
+  * Remove build dependency on ruby-rspec
+  * add dep8 tests
+  * puppetmaster-passenger.postinst: check if puppet.conf can be parsed on
+    install.
+    Thanks to Ubuntu
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 19 Jun 2013 11:45:46 +0200
+
+puppet (3.2.1-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 26 May 2013 18:08:38 +0200
+
+puppet (3.1.1-2) unstable; urgency=low
+
+  * Upload to unstable after freeze
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 05 May 2013 11:45:33 +0200
+
+puppet (3.1.1-1) experimental; urgency=low
+
+  * New upstream release (CVE-2013-1640, CVE-2013-1652, CVE-2013-1653,
+    CVE-2013-1654, CVE-2013-1655, CVE-2013-2275)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 13 Mar 2013 10:59:16 +0100
+
+puppet (3.1.0-1) experimental; urgency=low
+
+  * New upstream release
+  * Add no-rubygems patch
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Mon, 04 Mar 2013 08:48:15 +0100
+
+puppet (2.7.18-2) unstable; urgency=low
+
+  * Create /etc/puppet/files on package install (Closes: #591897)
+
+ -- Micah Anderson <micah@debian.org>  Sat, 29 Sep 2012 18:03:53 -0400
+
+puppet (2.7.18-1) unstable; urgency=high
+
+  * New upstream release (CVE-2012-3864, CVE-2012-3865,
+    CVE-2012-3866, CVE-2012-3867)
+  * Restrict puppet 2.7 to only run on ruby1.8
+    - follow http://docs.puppetlabs.com/guides/platforms.html
+    - backout ruby1.9.1 patches
+  
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 11 Jul 2012 15:40:56 +0200
+
+puppet (2.7.17-1) unstable; urgency=low
+
+  * New upstream release
+  * Support ruby1.9 and ruby1.8 with dh_ruby packaging
+  * Add missing vim indent file
+  * Add patch to fix fqdn_rand function for ruby 1.9
+  * Add patch to fix require warnings for ruby 1.9
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 24 Jun 2012 16:03:16 +0200
+
+puppet (2.7.14-1) unstable; urgency=low
+
+  * Imported Upstream version 2.7.14
+  * Add apache headers module (Closes: #670424)
+  * Revert patch for upstart provider, fixed upstream
+  * Convert fakes.rb commit to quilt patch
+  * Convert Rakefile commit to quilt patch
+  * Use breaks/replaces instead of conflicts in debian/control
+  * Update debian/copyright (format 1.0)
+  * Update lintian overrides
+  * Update descriptions in init scripts, debian/control and quilt patches
+  * Maintainer scripts: Use "set -e" instead of "-e" on the shebang line
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 05 May 2012 12:04:45 +0200
+
+puppet (2.7.13-1) unstable; urgency=high
+
+  * Imported Upstream version 2.7.13 (CVE-2012-1906, CVE-2012-1986,
+    CVE-2012-1987, CVE-2012-1988, CVE-2012-1989)
+  * Remove superfluous dependency on facter (Closes: #668136)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 11 Apr 2012 05:19:28 +0200
+
+puppet (2.7.12-3) unstable; urgency=low
+
+  * Remove mongrel support (Closes: #664236)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 03 Apr 2012 19:08:19 +0200
+
+puppet (2.7.12-2) unstable; urgency=low
+
+  * Add install section for systemd services
+  * Backport fix for runit/daemontools services (Closes: #663873)
+  * Bump standards version (no changes)
+  * Ensure puppet group exists (Closes: #650527)
+  * Update passenger documentroot (Closes: #662866)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 25 Mar 2012 19:52:54 +0200
+
+puppet (2.7.12-1) unstable; urgency=low
+
+  * New upstream release
+  * Fix disabled puppetmaster init script return code (Closes: #661927)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 16 Mar 2012 13:34:56 +0100
+
+puppet (2.7.11-1) unstable; urgency=high
+
+  * New upstream release
+  * Urgency set to high due to regressions in previous release
+    and security vulnerabilities
+  * Execs when run with a user specified, but no group, get the root
+    group. Similarly unexpected privileges are given to providers and
+    types (egid remains as root), this is fixed with a patch from
+    upstream (CVE-2012-1053)
+  * Fix Klogin write through symlink (CVE-2012-1054)
+
+ -- Micah Anderson <micah@debian.org>  Thu, 23 Feb 2012 18:24:48 -0500
+
+puppet (2.7.10-2) unstable; urgency=low
+
+  * Use maintscript support in dh_installdeb (Closes: #659612)
+
+ -- Micah Anderson <micah@debian.org>  Thu, 16 Feb 2012 12:22:45 -0500
+
+puppet (2.7.10-1) unstable; urgency=low
+
+  * New upstream release
+  * Update breaks/replaces for puppetmaster-common (Closes: #656962)
+  * Add systemd services for puppet agent and master
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 26 Jan 2012 11:27:00 +0100
+
+puppet (2.7.9-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 10 Dec 2011 12:16:32 +0100
+
+puppet (2.7.8-1) unstable; urgency=low
+
+  * New upstream release
+  * Update dependencies for renamed ruby packages
+  * puppet-testsuite: Depend on ruby-sqlite3
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 09 Dec 2011 08:50:08 +0100
+
+puppet (2.7.6-1) unstable; urgency=high
+
+  * New upstream release (CVE-2011-3872)
+  * Remove cherry-picked "groupadd_aix_warning" patch
+  * Install all new manpages
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 22 Oct 2011 14:08:22 +0000
+
+puppet (2.7.5-3) unstable; urgency=low
+
+  * Generate certificate properly for puppetmaster-passenger (Closes: #645073)
+  * Init scripts: Remove superfluous arguments for agent and queue daemons
+  * Move the etckeeper hooks from puppet to puppet-common
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 12 Oct 2011 15:43:24 +0200
+
+puppet (2.7.5-2) unstable; urgency=low
+
+  * Add patch to fix upstream issue #9027 re manages_aix_lam warnings
+  * Adjust dependencies. "libstomp-ruby" renamed to "ruby-stomp"
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 06 Oct 2011 15:24:59 +0200
+
+puppet (2.7.5-1) unstable; urgency=low
+
+  * New upstream version
+  * Remove README.source, the up-to-date information is kept in
+    debian/control
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 05 Oct 2011 16:36:28 +0200
+
+puppet (2.7.3-3) unstable; urgency=high
+
+  [Micah Anderson]
+  * Fix SSH authorized keys symlink attack (CVE-2011-3870)
+  * Fix K5login content attack (CVE-2011-3869)
+  * Fix predictable temporary file using RAL (CVE-2011-3871)
+  * Fix file indirectory injection
+
+  [Stig Sandbeck Mathisen]
+  * Update package conflicts for puppet-el and vim-puppet (Closes: #643657)
+  
+ -- Micah Anderson <micah@debian.org>  Fri, 30 Sep 2011 21:08:55 -0400
+
+puppet (2.7.3-2) unstable; urgency=high
+
+  * Resist directory traversal attacks (CVE-2011-3848)
+
+ -- Micah Anderson <micah@debian.org>  Wed, 28 Sep 2011 11:00:12 -0400
+
+puppet (2.7.3-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 16 Aug 2011 08:38:28 +0200
+
+puppet (2.7.1-1) UNRELEASED; urgency=low
+
+  * New upstream version
+  * Bump Standards-Version (no changes)
+  * Adjust debian/source/options to allow for a VCS-generated patch
+  * Tell adduser not to create /var/lib/puppet (Closes: #609896)
+  * Use dpkg-statoverride to handle permissions
+  * Allow the use of file-rc (Closes: #625638)
+  * Use the pkg-ruby-extras watch service
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sun, 17 Jul 2011 17:43:31 +0200
+
+puppet (2.6.8-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 28 Apr 2011 19:26:00 +0200
+
+puppet (2.6.7-2) unstable; urgency=medium
+
+  * Fix puppetmaster-passenger.postinst to get proper 
+    ssl configs (Closes: #620635)
+  * Fix maintainer scripts ignoring errors
+
+ -- Micah Anderson <micah@debian.org>  Mon, 11 Apr 2011 11:31:23 -0400
+
+puppet (2.6.7-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 25 Mar 2011 21:10:07 +0100
+
+puppet (2.6.6-1) unstable; urgency=low
+
+  * New upstream release 2.6.6
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 10 Mar 2011 08:42:00 +0100
+
+puppet (2.6.6~rc1-1) experimental; urgency=low
+
+  * New upstream release candidate
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Thu, 03 Mar 2011 21:00:31 +0100
+
+puppet (2.6.5-1) unstable; urgency=low
+
+  * New upstream version (Closes: #612894)
+  * Remove renamed configuration files now handled by other packages (Closes: #564947, #611615)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 01 Mar 2011 13:59:58 +0100
+
+puppet (2.6.4-2) unstable; urgency=low
+
+  * Release for unstable
+  * Move puppetstoredconfigclean to puppetmaster-common, and set ruby1.8
+    as parser to match the rest of the puppet suite
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Mon, 07 Feb 2011 07:28:19 +0100
+
+puppet (2.6.4-1) experimental; urgency=low
+
+  [ Micah Anderson ]
+  * Make puppetqd honor flags from /etc/default/puppetqd (Closes: #605510)
+  * Remove the puppetqd PID file on stop (Closes: #605512)
+  * Add ext/puppetstoredconfigclean to puppetmaster:/usr/sbin
+  * Patch ext/logcheck/puppet to handle new puppet-master 
+    Compiled log lines (Closes: #602336)
+  * Fix puppetqd initscript PID location
+  * Fix /etc/default/puppetmaster comments to match new section headings
+  * Fix puppetmaster/README.Debian to match new section headings
+  * Fix Should-Start init header in puppet initscript
+
+  [ Mathias Gug ]
+  * New upstream version. 
+
+  [ Stig Sandbeck Mathisen ]
+  * debian/puppetmaster.logrotate: send SIGUSR2 on log rotation (Closes:
+    #602698)
+  * puppet-common: Add versioned dependency on sysv-rc
+
+  [ martin f krafft ]
+  * Use update-rc.d enable/disable in the "debian" provider in the
+    "service" type (Closes: #573551)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 26 Jan 2011 16:10:56 +0100
+
+puppet (2.6.3-1) experimental; urgency=low
+
+  [ Mathias Gug ]
+  * New upstream version.
+
+  [ Stig Sandbeck Mathisen ]
+  * debian/control: Adjust dependencies for puppet-testsuite, depend on
+    puppet-common instead of puppet and puppetmaster
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 23 Nov 2010 10:40:31 +0100
+
+puppet (2.6.1-1) experimental; urgency=low
+
+  [ Mathias Gug ]
+  * New upstream version:
+    - Fix "Puppet standalone broken" (Closes: #594575)
+  * test/lib/puppettest/fakes.rb: Fix puppettest to use puppet system 
+    library.
+  * debian/puppetmaster-passenger.postinst: Use cacrl instead of hostcrl to
+    set the location of the CRL in apache2 configuration. Fix apache2 
+    configuration on upgrade as well (LP: #641001).
+  * debian/control:
+    - move all puppet dependencies to puppet-common since all the code is
+      actually located in puppet-common. 
+    - move libaugeas from a recommend to a dependency.
+
+  [ Stig Sandbeck Mathisen ]
+  * Fix "require" path for puppet queue.
+  * Add dependency on "facter" for "puppet-common"
+  * Make sure the "puppet-common" package can be purged even when not fully
+    installed (Closes: #596163)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Sat, 02 Oct 2010 12:14:37 +0200
+
+puppet (2.6.1~rc3-1) experimental; urgency=low
+
+  [ Mathias Gug ]
+  * New upstream version:
+    - fix config.ru file to run puppetmaster as a rack application.
+      (Closes: #593557)
+  * Fix test suite to run from a package install rather then from the source
+    directory:
+    + Rakefile: use system puppet.rb file to detect version.
+    + spec/unit/application/apply_spec.rb: Fix test suite to use puppet 
+      system library.
+    + spec/spec_helper.rb: disable gem.
+  * Fix init service provider to correctly check the status of services
+    using upstart jobs (Closes: #584481, LP: #551544).
+  * etckeeper integration (Closes: #571127)
+    [server-lucid-puppet-etckeeper-integration]:
+    + debian/etckeeper-commit-post, debian/etckeeper-commit-pre:
+       Call "etckeeper commit" before and after catalog runs.
+       Silently bail out if etckeeper is not available.
+    + debian/puppet.conf: Call out to the etckeeper hooks using 
+       the prerun_command and postrun_command hooks.
+    + debian/rules: Install the etckeeper hook scripts in /etc/puppet.
+    + debian/README.Debian: add note about etckeeper integration.
+    + debian/control: the puppet package suggests etckeeper.
+  * Create puppetmaster-passenger package to automatically setup the
+    puppetmaster to be run under mod passenger and apache2:
+    - create new puppetmaster-common package to share files between
+      puppetmaster (ie webrick) and puppetmaster-passenger.
+    - move puppetqd to puppetmaster-common.
+    - debian/puppet.conf: enable ssl options so that the default configuration
+      works out of the box under passenger.
+  * debian/puppet-common.postinst: set permissions and ownership of puppet log
+    directory.
+  * Move puppetmaster's Recommends to Suggests.
+
+  [ Stig Sandbeck Mathisen ]
+  * Recommend lsb-release (Closes: #593606)
+  * Recommend debconf-utils (Closes: #593780)
+  * ext/puppetlast: removed from upstream
+  * Cherry-pick updated man pages from upstream
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 27 Aug 2010 14:32:00 +0200
+
+puppet (2.6.0-2) unstable; urgency=low
+
+  * Bump Standards-Version to 3.9.1
+  * Release for unstable
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Wed, 28 Jul 2010 20:48:21 +0200
+
+puppet (2.6.0-1) experimental; urgency=low
+
+  * New upstream version
+  * Fix "short package description doesn't differ from binary package
+    puppet", update description of binary package. (Closes: #587364)
+  * Move /usr/bin/puppet to the puppet-common package
+  * debian/control: Convert Conflicts: to Breaks:
+  * debian/control: bump policy version and update project homepage
+  * debian/control: Update dependencies/breakages
+  * debian/copyright: Remove reference to deprecated bsd license file,
+    it is included already
+  * move manpage puppet(8) to package puppet-common
+  * Debian fix: set correct header in puppet.conf(5)
+  * Add puppetqd(8) to the puppetmaster package
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 20 Jul 2010 09:37:22 +0200
+
+puppet (0.25.5-1) unstable; urgency=low
+
+  [ Stig Sandbeck Mathisen ]
+  * New upstream version: 0.25.5
+  * Adjust conflicts for puppet-common, to ensure upgrade goes well
+
+  [ Mathias Gug ]
+  * Add /etc/puppet/templates and /etc/puppet/modules to the puppet-
+    common package (Closes: #571129)
+  * Add binary package "puppet-testsuite" (Closes: #584480)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 25 Jun 2010 17:27:05 +0200
+
+puppet (0.25.4-6) unstable; urgency=low
+
+  * clarify passenger options in default/puppetmaster 
+  * add patch to ext/rack/files/apache2.conf for debian-specific settings
+  * debian/control: add version depends on librack-ruby
+  * additional start-stop-daemon fix for puppet.init and puppetqd.init
+  * debian/rules: actually install config.ru owned by the puppet user,
+    this is necessary for proper suid of passenger (closes: #577366)
+
+ -- Micah Anderson <micah@debian.org>  Tue, 20 Apr 2010 16:06:38 -0400
+
+puppet (0.25.4-5) unstable; urgency=low
+
+  * debian/puppetmaster.init: fix invocation of start-stop-daemon (closes:
+  * #578066)
+
+ -- Andrew Pollock <apollock@debian.org>  Sat, 17 Apr 2010 20:33:09 -0700
+
+puppet (0.25.4-4) unstable; urgency=low
+
+  [ Andrew Pollock ]
+  * debian/watch: update for new upstream location
+  * apply patch from Mathias Gug to add /etc/puppet to puppet-common's
+    directories so that it is removed on package purge (if empty). Also removes
+    /var/log/puppet on purge (closes: #571130)
+
+  [ Micah Anderson ]
+  * add Suggests: libselinux-ruby1.8 as puppet supports it, but only
+    if the library is present
+  * cherry-pick: add puppetmasterd dbconnections option to increase 
+    the rails 'max pool size' (redmine: #2568)
+  * fix puppetqd initscript status operation 
+
+  [ Andrew Pollock ]
+  * debian/rules: don't install config.ru owned by the puppet user (closes:
+    #577366)
+
+ -- Andrew Pollock <apollock@debian.org>  Thu, 15 Apr 2010 21:18:32 -0700
+
+puppet (0.25.4-3) unstable; urgency=low
+
+  [ Stig Sandbeck Mathisen ]
+  * Fix "puppetmaster and puppet scripts always return 0" with patch from
+    Mathias Gug, make sure return codes are actually used (Closes: #573473)
+
+  [ Micah Anderson ]
+  * Disable default puppet.conf option pluginsync=true, see puppet-common.NEWS
+  * Suggest in puppetmaster package: libapache2-mod-passenger, librack-ruby
+  * Create puppetmaster.README with information about the server type
+  * Provide an example apache2.conf for libapache2-mod-passenger
+  * Ship the rack config.ru, and README as README.rack
+  * Fix puppet-el.emacsen-startup script to be properly installed
+  * debian/puppetmaster.init: Fix init stop action to not fail if the
+    puppetmaster is already stopped, Thanks Mathias Gug (Closes: #574677)
+  * Add Suggests: stompserver/libstomp-ruby1.8 - needed for puppetqd 
+  * Add README.queueing to puppetmaster package which describes puppetqd
+  * Add /etc/init.d/puppetqd and defaults in /etc/defaults/puppetmaster
+  * Switch to dpkg-source 3.0 (quilt) format
+ 
+ -- Micah Anderson <micah@debian.org>  Tue, 16 Mar 2010 12:27:07 -0400
+
+puppet (0.25.4-2) unstable; urgency=low
+
+  [ Stig Sandbeck Mathisen ]
+  * puppet: do not explicitly remove /var/lib/puppet on purge (Closes: #525852)
+  * upstream cherry-pick: Updated man pages and moved puppet.conf.8 to
+    puppet.conf.5 (Closes: #563567)
+  * Fix "Improper ownership of /var/lib/puppet/state", explicitly create this
+    in postinst (and remove in postrm on purge) (Closes: #462551)
+  * Fix "wrong default location for templates", update default settings, and
+    create puppet-common.NEWS with information (Closes: #484659)
+  * Move postinst and postrm handling of shared users and directories to
+    puppet-common (Closes: #570012)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Tue, 16 Feb 2010 06:30:55 +0000
+
+puppet (0.25.4-1) unstable; urgency=low
+
+  [Nigel Kersten ]
+  * New upstream version 0.25.4
+ 
+  [ Micah Anderson ]
+  * Fix debian/rules typo in install of puppet-mode-init.el
+  * Fix which package puppet-mode-init.el gets installed into
+  * Add Suggests for vim-puppet and puppet-el on binary packages
+
+  [ Stig Sandbeck Mathisen ]
+  * Update debian/copyright
+  * debian/{puppet,puppetmaster}.init: Add status argument, fix pid file
+    locations (Closes: #545975)
+  * Refactoring: Add binary packages for puppet-common, puppet-el, vim-puppet
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Mon, 01 Feb 2010 12:31:58 +0100
+
+puppet (0.25.1-3) unstable; urgency=low
+
+  [ Nigel Kersten ]
+  * Require modification of /etc/default/puppet to start puppet client daemon.
+    (closes: #518831)
+  * cherry pick upstream fix for puppetrun with tags (closes: #559092)
+  * cherry pick upstream fix for supplementary groups not being reset.
+    (CVE-2009-3564) (closes: #551073)
+
+  [ Andrew Pollock ]
+  * debian/{puppet,puppetmaster}.pid: Correct the path to the pidfiles
+    (closes: #561231)
+  * debian/control: version the build dependency on facter (closes: #551055)
+
+ -- Andrew Pollock <apollock@debian.org>  Wed, 16 Dec 2009 11:36:39 -0800
+
+puppet (0.25.1-2) unstable; urgency=low
+
+  * Add puppetqd executable to puppetmaster package (closes: #554624)
+
+ -- Nigel Kersten <nigel@explanatorygap.net>  Thu, 05 Nov 2009 11:23:10 -0800
+
+puppet (0.25.1-1) unstable; urgency=low
+
+  * New upstream release of 0.25.1
+
+ -- Nigel Kersten <nigel@explanatorygap.net>  Tue, 27 Oct 2009 10:35:40 -0700
+
+puppet (0.25.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Tweak .install files to cope with new use of sbindir from upstream.
+  * Add the new auth.conf config file to the puppetmaster package.
+
+ -- Nigel Kersten <nigel@explanatorygap.net>  Sun, 16 Aug 2009 05:34:17 -0700
+
+puppet (0.24.8-3) unstable; urgency=low
+
+  [ Micah Anderson ]
+  * Make logcheck ignore 'Reopening log files' on puppetmaster (Closes: #538721)
+
+  [ Nigel Kersten ]
+  * switch from unreleased to unstable.
+
+ -- Nigel Kersten <nigel@explanatorygap.net>  Sun, 16 Aug 2009 05:33:53 -0700
+
+puppet (0.24.8-2) unstable; urgency=high
+
+  [ Micah Anderson ]
+  * Cherry-pick upstream versioncmp fix (redmine:#2110)
+
+  [ Andrew Pollock ]
+  * Enable waiting for certificates for the default value (upstream default
+    that was previously disabled or enabled with a 5 second value)
+  * Re-ship the vim syntax file in the correct location (it fell out after the
+    0.24.5-3 upload) (closes: #530752)
+  * Re-add the 0.24.5-3 changelog entry
+  * debian/puppet.postrm: don't delete the user or group (closes: #528068,
+    #527381)
+  * debian/puppet.{preinst,postinst}: Applied modified patch from Stig
+    Sandbeck Mathisen to call conditionally call adduser in the postinst, if
+    it's available
+
+  [ Nigel Kersten ]
+  * Switched to use install.rb, primarily to stop shebangs using /usr/bin/env
+  * Stopped using dh_movefiles, moved to dh_install
+  * debian/rules greatly cleaned up due to above two changes
+
+  [ Andrew Pollock ]
+  * debian/control: add rdoc, libopenssl-ruby and facter to build dependencies
+  * debian/control: depend on ruby1.8 instead of ruby to placate Lintian
+  * debian/puppet.install: brown paper bag release averted; install 
+    /usr/lib/ruby/1.8
+  * debian/rules: ensure permissions on everything under /usr/lib/ruby/1.8 is
+    correct
+
+ -- Andrew Pollock <apollock@debian.org>  Tue, 16 Jun 2009 23:37:22 -0700
+
+puppet (0.24.8-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/control: Add Nigel Kersten and myself as uploaders
+  * debian/changelog: wrap long lines
+  * debian/watch: ignore release candidates
+  * debian/compat: bump to 5
+  * debian/control: bump Standards-Version (no changes)
+
+ -- Andrew Pollock <apollock@debian.org>  Mon, 13 Apr 2009 17:12:47 -0700
+
+puppet (0.24.7-2) experimental; urgency=low
+
+  * make puppetmaster conflict previous puppet due to man page move
+
+ -- Micah Anderson <micah@debian.org>  Wed, 28 Jan 2009 10:28:23 -0500
+
+puppet (0.24.7-1) experimental; urgency=low
+
+  * New upstream release
+  * Fixed comment in defaults/puppetmaster (Closes: #510881)
+  * Fixed debian/puppetmaster.manpages and debian/puppet.manpages to
+    distribute
+    puppetrun and puppetca correctly, thanks Savvas Radevic (Closes: #511826)
+  * Added puppetmaster Recommends: libldap-ruby1.8 to silence puppetrun
+    (Closes: #512639)
+  * Added puppet Recommends: libaugeas-ruby1.8 for new Augeas support in this
+    release
+
+ -- Micah Anderson <micah@debian.org>  Fri, 23 Jan 2009 09:27:09 -0500
+
+puppet (0.24.6-1) experimental; urgency=low
+
+  * New upstream release (Closes: #506129, #504624, #502163)
+  * Distribute filebucket binary (Closes: #499999)
+  * Fix missing check for START variable in defaults files (Closes: #498284)
+  * Fix maintainer scripts so that they do not ignore errors (set -e)
+  * Fix maintainer scripts so they don't have prepended paths (thanks lintian)
+  * Cherry-pick fixes from upstream:
+    - comparison of String with 0 failed (Closes: #500848)
+    - filename cannot handle ++ (Closes: #502163)
+    - tidy must specify size, age or both (Closes: #500852)
+	
+ -- Micah Anderson <micah@debian.org>  Sat, 29 Nov 2008 13:59:25 -0500
+
+puppet (0.24.5-3) unstable; urgency=medium
+
+  * Set wait for cert timeout to 5 secs, to avoid resource abuse (Closes:
+    #509566)
+  * Distribute filebucket binary (Closes: #499999)
+  * Place vim syntax in the correct location (LP: #181960)
+
+ -- Thom May <thom@debian.org>  Wed, 07 Jan 2009 15:15:34 -0500
+
+puppet (0.24.5-2) unstable; urgency=low
+
+  * Fix puppetlast to work with 0.24.5
+  * Adjust logcheck to match against new log messages in 0.24.5
+  * Update standards version to 3.8.0 (no changes)
+  * Update changelog to reduce length of line to make lintian happy
+
+ -- Micah Anderson <micah@debian.org>  Sat, 26 Jul 2008 15:43:45 -0400
+
+puppet (0.24.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Applied patch from Martin Krafft to improve logcheck file installation
+
+ -- Thom May <thom@debian.org>  Thu, 24 Jul 2008 10:58:08 +0100
+
+puppet (0.24.4-8) unstable; urgency=low
+
+  * Changed the default port value to 8140 in /etc/default/puppetmaster
+    to be consistent with the client default port. (Closes: #483823)
+  * Cherry-picked various bug fixes from upstream:
+    - further emacs mode updates from Russ Allbery
+    - misleading error if CA private key can not be decrypted (trac:#1271)
+    - fix missing bracket in documentation (trac:#1209)
+    - man pages updates (trac:#1211)
+    - add dump parameter to mount type (trac:#1212)
+    - fixed undefined variable in lib/puppet/util/settings.rb (trac:#1218)
+    - usermod problem on Solaris (trac:#1207)
+    - added native authorized_keys type
+    - test within a template if a variable or fact is defined (trac:#1177)
+    - Fixed Red Hat service disabling (trac:#1219)
+    - fix crontab provider parse error when line begins w/space (trac:#1216)
+    - Fix for latest method in rpm provider (trac:#1224)
+    - puppetd documentation updates (trac:#1227)
+    - Modified the 'factpath' setting to automatically configure Facter
+      to load facts there if a new enough version of Facter is used.
+    - Removing unused file lib/puppet/util/variables.rb (trac:#1229)
+    - Fixing transaction support for prefetching generated resources.
+      Previously, we prefetched then generated, which caused generated
+      resources that needed prefetching not to work.  This just reorders
+      the calls, so generated resources now get prefetched.
+    - Respect "replace => false" for symlinks (trac:#1235)
+    - Added cron random function fixing ticket (trac:#311)
+    - No more clear_cache failures (trac:#1247)
+    - Fixed Rakefile to install non-.rb files (trac:#1266)
+
+ -- Micah Anderson <micah@debian.org>  Sat, 31 May 2008 11:39:47 -0400
+
+puppet (0.24.4-7) unstable; urgency=low
+  
+  * Update emacs-mode with changes cherry-picked from rra's repository
+  * Fix typo in puppetmaster.init (Closes: #480019)
+  * Fix variable name in /etc/default/puppetmaster comments
+  * Fix incorrect port increment in puppetmaster initscript when mongrel
+    is used, thanks Francois Deppierraz (Closes: #480263)
+  * Add puppetmaster.postrm to remove /var/log/puppet on purge
+  * Added debian/puppetmaster.dirs containing etc/puppet/manifests
+  * Remove puppet group on purge (Closes: #481511)
+  * Remove old config files and stray directories (Closes: #454681)
+  
+ -- Micah Anderson <micah@debian.org>>  Sat, 03 May 2008 16:18:32 -0400
+  
+puppet (0.24.4-6) unstable; urgency=low
+
+  * Remove bashisms in puppetmaster.init
+  * Add puppetlast script
+
+ -- Micah Anderson <micah@debian.org>>  Wed, 30 Apr 2008 07:37:04 -0400
+
+puppet (0.24.4-5) unstable; urgency=low
+
+  * Fix missing --pidfile piece for mongrel startup and make 
+    stop consistent, thanks Bart Cortooms (Closes: #476840)
+  * Add trailing newline missing from default files
+
+ -- Micah Anderson <micah@debian.org>  Sat, 19 Apr 2008 11:03:35 -0400
+
+puppet (0.24.4-4) unstable; urgency=low
+
+  * Create /etc/default/puppet and /etc/default/puppetmaster
+  * Modify /etc/init.d/puppetmaster to support mongrel instances
+    on multiple ports
+  * Remove no longer necessary .svn cleaning from debian/rules
+  * Added $network and $named appropriated places in the LSB
+    headers in puppet and puppetmaster initscripts, 
+    thanks Sam Quigley
+  * Install ralsh (Closes: #476629)
+  * Cherry-pick upstream patches from 0.24.x branch:
+    - Install manpages
+    - Fix shebang issues (#1148)
+    - Updated fix for (#1020)
+    - Fix for (#1174)
+    - Emacs mode updates (#1160)
+    - Debian service [en|dis]able issue (#1161)
+    - User type group list validation enhancement
+    - Fix configtimeout issue (#1176)
+
+ -- Micah Anderson <micah@debian.org>  Sun, 13 Apr 2008 19:18:46 -0400
+
+puppet (0.24.4-3) unstable; urgency=low
+
+  * Remove pi binary, puppetdoc provides this functionality now
+   (Closes: #472850)
+
+ -- Micah Anderson <micah@debian.org>  Fri, 28 Mar 2008 12:38:30 -0400
+
+puppet (0.24.4-2) unstable; urgency=low
+
+  * Fix duplicate man8/puppetmasterd.8 install
+
+ -- Micah Anderson <micah@debian.org>  Tue, 25 Mar 2008 22:58:22 -0400
+
+puppet (0.24.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Install man pages missing from upstream release
+
+ -- Micah Anderson <micah@debian.org>  Tue, 25 Mar 2008 18:17:02 -0400
+
+puppet (0.24.3-1) unstable; urgency=low
+
+  [ Micah Anderson]
+  * New upstream release
+  * Install man pages (Closes: #385529)
+  * Apply lsb formatted dependency info into initscripts, thanks
+    Petter Reinholdtsen (Closes: #462915)
+  * Install more robust puppet-mode.el
+  * Add factpath and pluginsync=true to the default puppet.conf so that
+    facts added through pluginsync are loaded by puppet
+  * Add [plugins] section to fileserver.conf
+  * Updated outdated debian/control substrvar for puppet to ${source:Version}
+  * Updated link in debian/copyright for new URL to license
+  * Updated copyright in debian/copyright
+  * Bumped standards version to 3.7.3.0 (no changes)
+  * Switch debhelper from Build-Depends-Indep to Build-Depends because it is
+    required to run clean target (lintian check:
+    clean-should-be-satisfied-by-build-depends)
+  * Moved homepage from Description to control field
+  * Added Vcs-Browser and Vcs-Git fields to debian/control
+  [ Thom May ]
+  * If puppet can't start, continue with package install
+
+ -- Micah Anderson <micah@debian.org>  Sun, 09 Mar 2008 14:03:00 -0400
+
+puppet (0.24.1-2) unstable; urgency=low
+
+  * Set rundir correctly (Closes: #460203, #459579)
+  * Apply patch for puppet#1003 to enable collection of tagged resources
+
+ -- Thom May <thom@debian.org>  Wed, 16 Jan 2008 11:08:55 +0100
+
+puppet (0.24.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #445626)
+  * Set maintainer to pkg-puppet-devel
+
+ -- Thom May <thom@debian.org>  Sun, 30 Dec 2007 19:13:47 +0100
+
+puppet (0.24.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Thom May <thom@debian.org>  Wed, 19 Dec 2007 16:00:34 +0100
+
+puppet (0.23.2-15) unstable; urgency=low
+
+  * No change upload setting maintainer to me whilst waiting for an alioth
+    project.
+
+ -- Thom May <thom@debian.org>  Thu, 29 Nov 2007 10:44:50 +0100
+
+puppet (0.23.2-14) unstable; urgency=low
+
+  * Orphaning.
+  * Create /var/lib/puppet in the puppet package.  Closes: #452506.
+  * Start the puppet init script after puppetmaster, to silence whiny bug
+    reports.  Closes: #452064.
+  * Add a reload command to the Puppet init script.  Closes: #452060.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 29 Nov 2007 10:48:21 +1100
+
+puppet (0.23.2-13) unstable; urgency=low
+
+  * Drop quotes from an already-quoted value in a query.  Closes: #448179.
+  * Remove excessive quoting from puppet/network/handler/master.rb.
+    Closes: #448221.
+  * Force removal of directories during pluginsync.  Closes: #448180.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue, 30 Oct 2007 14:55:19 +1100
+
+puppet (0.23.2-12) unstable; urgency=low
+
+  * Create /var/run/puppet and set the perms in the various initscripts, as
+    well as hardcoding the rundir better in configuration.rb and removing
+    the explicit rundir setting from puppet.conf.  Closes: #447314.
+  * Apply additional patch given (backwards) to fix export/collect on some
+    database backends.  Closes: #445591 (again!)
+
+ -- Matthew Palmer <mpalmer@debian.org>  Sat, 20 Oct 2007 11:28:50 +1000
+
+puppet (0.23.2-11) unstable; urgency=low
+
+  * Apply patch from puppet#786 to fix a problem with exported resources not
+    being properly detected as needing a rerun.  Closes: #445591.
+  * Fix ignore handling for the plugins mount.  Closes: #446390.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Mon, 15 Oct 2007 09:11:25 +1000
+
+puppet (0.23.2-10) unstable; urgency=low
+
+  * Recycle connections when we change (or get) certs.
+  * Catch and retry more transient errors in the XMLRPC wrapper.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 27 Sep 2007 15:06:11 +1000
+
+puppet (0.23.2-9) unstable; urgency=low
+
+  * Recycle the HTTP connection if we get an EPIPE during a request. 
+    Closes: #444177.  Thanks to Jos Backus for helping with testing.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 27 Sep 2007 09:55:34 +1000
+
+puppet (0.23.2-8) unstable; urgency=low
+
+  * Remove extraneous debugging output accidentally left behind in the last
+    release.
+  * Fix spelling mistakes in debian/control and debian/puppet.preinst. 
+    Closes: #444158.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 27 Sep 2007 07:45:07 +1000
+
+puppet (0.23.2-7) unstable; urgency=low
+
+  * Ignore ENOENT errors in the module plugin syncing code, since they're
+    innocuous and expected.
+  * Allow facts that are downloaded through pluginsync to be used like any
+    other fact.
+  * Allow users to still have an old-style plugins mount if they want, by
+    specifying a path for the mount.  Also track down a fault in old-style
+    fileserving which did strange slash-stripping.  Closes: #443932.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue, 25 Sep 2007 16:41:32 +1000
+
+puppet (0.23.2-6) unstable; urgency=low
+
+  * Patch rails/param_name.rb to stop query failures, as per puppet#784.
+  * Actually honour namevar.
+  * Only set dbuser if explicitly asked for.
+  * Fix annoying database deletion error for ParamValue objects.
+  * Add an accessor for ca_file, since older openssl-ruby only had a writer.
+  * Fix the fileserver to honour ignore.  Thanks to Nathan Ward for the
+    bug report on IRC.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 20 Sep 2007 16:10:41 +1000
+
+puppet (0.23.2-5) unstable; urgency=low
+
+  * Add some NEWS for the ssldir transition.  Should have done that earlier.
+  * Remove the explicit mode change for vardir, and fix up the mode on
+    statedir, as well.  Closes: #425496.
+  * Only set some database parameters if they're explicitly set; this makes
+    life easier for PgSQL ident auth.
+  * Allow empty config options.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 13 Sep 2007 11:09:59 +1000
+
+puppet (0.23.2-4) unstable; urgency=low
+
+  * Fix puppet#776 in a slightly better way by only flushing the cache when
+    a value is changed, rather than whenever a value is read.
+  * Apply patch from puppet#755 to cache connections to the Puppetmaster,
+    which improves performance by more than a little.
+  * Modify the fileserver so that it provides a 'plugins' mount which
+    exports the union of the plugins directory of all modules.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Fri, 31 Aug 2007 15:32:04 +1000
+
+puppet (0.23.2-3) unstable; urgency=low
+
+  * Clear the config value cache every time.  This is a titchy little
+    performance hit, but it works around puppet#776 rather nicely.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Fri, 24 Aug 2007 16:08:04 +1000
+
+puppet (0.23.2-2) unstable; urgency=low
+
+  * Move the SSL state directory to a more policy-friendly location,
+    /var/lib/puppet/ssl.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue, 21 Aug 2007 12:54:40 +1000
+
+puppet (0.23.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue,  7 Aug 2007 12:47:49 +1000
+
+puppet (0.23.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Switch primary maintainer to me.  Thanks jaq.
+  * Make the recommendation for rails >= 1.2.3-2, to avoid
+    incompatibilities.  This breaks compatibility with stable, but the rails
+    package from unstable should install cleanly in stable.  Closes: #433999
+
+ -- Matthew Palmer <mpalmer@debian.org>  Sat, 21 Jul 2007 16:34:36 +1000
+
+puppet (0.23.0-1) unstable; urgency=low
+
+  * New upstream release.
+    - Includes a new configuration file handling system; see NEWS.Debian.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Mon, 25 Jun 2007 09:55:12 +1000
+
+puppet (0.22.4-2) unstable; urgency=low
+
+  * Depend on libshadow-ruby1.8, for new password modification functionality
+    added to upstream 0.22.4.
+  * Several improvements from Micah Anderson:
+    - Better vim syntax installation process.
+    - Install Emacs syntax highlighting.
+    - Install logcheck rules.  Closes: #421851.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu,  3 May 2007 15:04:15 +1000
+
+puppet (0.22.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Wed,  2 May 2007 12:20:15 +1000
+
+puppet (0.22.3-1) unstable; urgency=low
+
+  * New upstream release.  Closes: #415773.
+  * Switch to using our own logrotate config, and enhance it as per
+    David Schmitt's suggestions.  Closes: #414282.
+  * Add puppetrun to the puppetmaster package, and actually put puppetdoc
+    into the puppet package.  Closes: #419273.
+  * Copy vim syntax highlighting file into the puppet package, and add a
+    stanza to have Vim automatically highlight .pp files.  Closes: #412868.
+    Thanks to David Schmitt for researching how to do all of that.
+  * Add a templatedir setting to the default puppetmasterd.conf to make it
+    obvious that it can be changed.  Closes: #407506.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Wed, 18 Apr 2007 14:03:33 +1000
+
+puppet (0.22.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Fri,  2 Feb 2007 09:06:46 +1100
+
+puppet (0.22.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Use --startas instead of --init in init scripts, which (according to
+    Paul Hampson) makes checking for already-running instances work.
+    Closes: #405912.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Mon,  8 Jan 2007 08:41:35 +1100
+
+puppet (0.20.1-1) unstable; urgency=low
+
+  * New upstream release.  (Closes: #387674)
+  * Rationalise the puppetmasterd init script.
+  * Add inclusion of /etc/default files for init scripts.  (Closes: #388178)
+  * Add puppet.conf to match puppetd.conf.  (Closes: #385646)
+
+ -- Matthew Palmer <mpalmer@debian.org>  Thu, 30 Nov 2006 10:54:19 +1100
+
+puppet (0.18.4-1) unstable; urgency=low
+
+  * New upstream release.
+    - Properly detect all services, including those in rcS.d.
+      (Closes: #378351)
+  * Add Homepage: to the long description.  (Closes: #377896)
+  
+ -- Matthew Palmer <mpalmer@debian.org>  Mon, 24 Jul 2006 19:46:06 +1000
+
+puppet (0.18.3-1) unstable; urgency=low
+
+  * New upstream version.
+    - Set DEBIAN_FRONTEND=noninteractive when installing Debian packages.
+      (Closes: #378338)
+
+ -- Matthew Palmer <mpalmer@debian.org>  Sun, 16 Jul 2006 10:58:50 +1000
+
+puppet (0.18.1-1) unstable; urgency=low
+
+  * Make Puppet not wait for a cert at all (to prevent startup hangs).
+  * Cleanup the init scripts to not have NO_START detritus.
+  * Apply puppet.debian-frontend, to set DEBIAN_FRONTEND=noninteractive on
+    package installation.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue, 27 Jun 2006 15:05:32 +1000
+
+puppet (0.18.0-1) unstable; urgency=low
+
+  * Initial release.  (Closes: #348625)
+
+ -- Matthew Palmer <mpalmer@debian.org>  Wed, 24 May 2006 13:10:01 +1000

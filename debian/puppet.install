@@ -1,0 +1,7 @@
+/etc/puppet
+/usr/bin/puppet
+/usr/lib/ruby/vendor_ruby/*
+/usr/share/puppet/locale
+ext/ldap/puppet.schema /etc/ldap/schema
+debian/conffiles/hiera.yaml /etc/puppet
+debian/conffiles/puppet.conf /etc/puppet

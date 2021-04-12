@@ -1,0 +1,9 @@
+0001-Adjust-default-paths.patch
+0002-Adjust-puppet-master-passenger-paths.patch
+0004-add-puppet3-compat-middleware.patch
+0005-use-systemd-as-the-default-service-provider.patch
+0006-debian-service-provider-use-service.patch
+0007-Fix-service-listing-and-enable-disable-in-Debian.patch
+0008-fix-locale-loading.patch
+reproducible-build.patch
+0009-Avoid-BigDecimals-when-loading-JSON-using-Oj.patch
