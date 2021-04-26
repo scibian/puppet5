@@ -1,3 +1,13 @@
+puppet (5.5.10-4~bpo9+1sci9u2) scibian9; urgency=medium
+
+  * unsupport defaults-disable by rc-update on stretch
+  * stretch (not buster) init-system-helpers version
+  * no virtual ronn package, so use stretch equivalent
+  * enforce facter dependance to 3.10+
+  * rename puppet packages to puppet5
+
+ -- Kwame AMEDODJI <kwame-externe.amedodji@edf.fr>  Mon, 26 Apr 2021 10:50:42 +0200
+
 puppet (5.5.10-4~bpo9+1sci9u1) scibian9; urgency=medium
 
   [ Kwame Amedodji ]
