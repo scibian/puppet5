@@ -8,7 +8,7 @@ Uploaders: Micah Anderson <micah@debian.org>,
  Apollon Oikonomopoulos <apoikos@debian.org>
 Build-Depends:
  debhelper (>= 11),
- facter,
+ facter (>= 3.10),
  rake,
  hiera,
  ruby-ronn,
