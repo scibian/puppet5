@@ -42,7 +42,7 @@ override_dh_clean:
 	dh_clean debian/puppet-common.logcheck.ignore.server metadata.yml
 
 override_dh_installinit:
-	dh_installinit -ppuppet -- defaults-disabled
+	dh_installinit -ppuppet -- defaults
 	dh_installinit --remaining-packages
 
 override_dh_installsystemd:

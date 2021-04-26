@@ -52,7 +52,8 @@ if [ "$1" = "configure" ]; then
 
 		if [ -x /etc/init.d/puppet-agent ] && \
 			! ls /etc/rc[S2345].d/S[0-9][0-9]puppet-agent >/dev/null 2>&1; then
-			update-rc.d puppet defaults-disabled >/dev/null || true
+			update-rc.d puppet defaults >/dev/null || true
+			update-rc.d puppet disable >/dev/null || true
 		fi
 
 		# Remove puppet-agent's symlinks to avoid duplicate starts
