@@ -11,21 +11,21 @@ Build-Depends:
  facter,
  rake,
  hiera,
- ronn,
+ ruby-ronn,
  yard,
 Standards-Version: 4.3.0
 Vcs-Git: https://salsa.debian.org/puppet-team/puppet.git
 Vcs-Browser: https://salsa.debian.org/puppet-team/puppet
 Homepage: https://github.com/puppetlabs/puppet
 
-Package: puppet
+Package: puppet5
 Architecture: all
 Depends: ${misc:Depends},
  adduser,
  facter,
  ruby-augeas,
  hiera,
- init-system-helpers (>= 1.50),
+ init-system-helpers (>= 1.48),
  lsb-base,
  ruby | ruby-interpreter,
  ruby-deep-merge,
@@ -52,7 +52,7 @@ Description: configuration management system
  To install and configure a puppet master, install one of the
  "puppet-master" or "puppet-master-passenger" packages.
 
-Package: puppet-master
+Package: puppet5-master
 Architecture: all
 Depends: ${misc:Depends},
  puppet (= ${source:Version}),
@@ -69,7 +69,7 @@ Description: configuration management system, master service
  which is suitable for small deployments. For larger deployments or if you wish
  to support Puppet 3 clients, puppet-master-passenger should be used instead.
 
-Package: puppetmaster
+Package: puppetmaster5
 Section: oldlibs
 Architecture: all
 Depends: ${misc:Depends}, puppet-master
@@ -77,7 +77,7 @@ Description: configuration management system, master service - transitional pack
  This is a transitional package, superseded by puppet-master. It can safely be
  removed.
 
-Package: puppet-master-passenger
+Package: puppet5-master-passenger
 Architecture: all
 Depends: ${misc:Depends},
  apache2,
@@ -96,7 +96,7 @@ Description: configuration management system, scalable master service
  suitable for large deployments. This offers better scalability than
  the "puppet-master" package.
 
-Package: puppetmaster-passenger
+Package: puppetmaster5-passenger
 Section: oldlibs
 Architecture: all
 Depends: ${misc:Depends}, puppet-master-passenger
@@ -104,8 +104,8 @@ Description: configuration management system, scalable master service - transiti
  This is a transitional package, superseded by puppet-master-passenger. It can
  safely be removed.
 
-Package: puppet-common
-Depends: puppet, ${misc:Depends}
+Package: puppet5-common
+Depends: puppet5, ${misc:Depends}
 Architecture: all
 Section: oldlibs
 Description: transitional dummy package

@@ -10,10 +10,10 @@ if [ "$1" = "configure" ] && [ -z "$2" ]; then
     if deb-systemd-helper debian-installed puppetmaster.service; then
         if ! deb-systemd-helper --quiet was-enabled puppetmaster.service; then
             # This is a "fresh" install, i.e. pulled in as a dependency of
-            # puppetmaster. Skip enabling puppet-master.service if puppetmaster
+            # puppetmaster. Skip enabling puppet5-master.service if puppetmaster
             # was not enabled
-            deb-systemd-helper unmask puppet-master.service >/dev/null || true
-            deb-systemd-helper update-state puppet-master.service >/dev/null || true
+            deb-systemd-helper unmask puppet5-master.service >/dev/null || true
+            deb-systemd-helper update-state puppet5-master.service >/dev/null || true
             update-rc.d puppet-master defaults >/dev/null || true
             update-rc.d puppet-master disable >/dev/null || true
         fi

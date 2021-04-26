@@ -26,25 +26,25 @@ override_dh_auto_build:
 
 override_dh_install:
 	dh_install --fail-missing -Xusr/share/man
-	mv debian/puppet-master-passenger/usr/share/puppet-master-passenger/example-passenger-vhost.conf \
-	  debian/puppet-master-passenger/usr/share/puppet-master-passenger/apache2.site.conf.tmpl
+	mv debian/puppet5-master-passenger/usr/share/puppet-master-passenger/example-passenger-vhost.conf \
+	  debian/puppet5-master-passenger/usr/share/puppet-master-passenger/apache2.site.conf.tmpl
 
 override_dh_installlogcheck:
-	ln ext/logcheck/puppet debian/puppet-common.logcheck.ignore.server
+	ln ext/logcheck/puppet debian/puppet5-common.logcheck.ignore.server
 	dh_installlogcheck
 
 override_dh_installexamples:
 	dh_installexamples
-	find debian/puppet-common/usr/share/doc/puppet-common/examples -type f -print0 | \
+	find debian/puppet5-common/usr/share/doc/puppet-common/examples -type f -print0 | \
 	  xargs -r -0 chmod 644
 
 override_dh_clean:
-	dh_clean debian/puppet-common.logcheck.ignore.server metadata.yml
+	dh_clean debian/puppet5-common.logcheck.ignore.server metadata.yml
 
 override_dh_installinit:
-	dh_installinit -ppuppet -- defaults-disabled
+	dh_installinit -ppuppet5 -- defaults
 	dh_installinit --remaining-packages
 
 override_dh_installsystemd:
-	dh_installsystemd -ppuppet --no-enable
+	dh_installsystemd -ppuppet5 --no-enable
 	dh_installsystemd --remaining-packages
