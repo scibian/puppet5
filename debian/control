@@ -11,7 +11,7 @@ Build-Depends:
  facter,
  rake,
  hiera,
- ronn,
+ ruby-ronn,
  yard,
 Standards-Version: 4.3.0
 Vcs-Git: https://salsa.debian.org/puppet-team/puppet.git
