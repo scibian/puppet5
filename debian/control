@@ -31,6 +31,8 @@ Recommends:
  lsb-release,
  ruby-selinux,
 Suggests: ruby-rrd, ruby-hocon
+Provides: puppet
+Conflicts: puppet
 Breaks: puppet-common (<< 4.5.1-1),
         puppetmaster-common (<< 4.4.2-1~),
         puppet-agent (<< 4.8.1-3~),
@@ -56,6 +58,8 @@ Depends: ${misc:Depends},
  lsb-base (>= 3.0-6),
 Breaks: puppetmaster (<< 4.8.1-3)
 Replaces: puppetmaster (<< 4.8.1-3)
+Provides: puppet-master
+Conflicts: puppet-master
 Description: configuration management system, master service
  Puppet is a configuration management system that allows you to define
  the state of your IT infrastructure, then automatically enforces the
@@ -75,6 +79,8 @@ Depends: ${misc:Depends},
  ruby | ruby-interpreter,
 Breaks: puppetmaster-passenger (<< 4.4.0-1)
 Replaces: puppetmaster-passenger (<< 4.4.0-1)
+Provides: puppet-master-passenger
+Conflicts: puppet-master-passenger
 Description: configuration management system, scalable master service
  Puppet is a configuration management system that allows you to define
  the state of your IT infrastructure, then automatically enforces the
