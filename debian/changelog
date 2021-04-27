@@ -1,3 +1,11 @@
+puppet (5.5.10-4~bpo9+1sci9u3) scibian9; urgency=medium
+
+  [ Kwame Amedodji ]
+  * add associated virtuals packages
+  * ignore debian/files right now
+
+ -- Kwame AMEDODJI <kwame-externe.amedodji@edf.fr>  Mon, 26 Apr 2021 22:09:09 +0200
+
 puppet (5.5.10-4~bpo9+1sci9u2) scibian9; urgency=medium
 
   * unsupport defaults-disable by rc-update on stretch
