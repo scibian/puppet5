@@ -65,14 +65,6 @@ Description: configuration management system, master service
  which is suitable for small deployments. For larger deployments or if you wish
  to support Puppet 3 clients, puppet-master-passenger should be used instead.
 
-Package: puppetmaster5
-Section: oldlibs
-Architecture: all
-Depends: ${misc:Depends}, puppet-master
-Description: configuration management system, master service - transitional package
- This is a transitional package, superseded by puppet-master. It can safely be
- removed.
-
 Package: puppet5-master-passenger
 Architecture: all
 Depends: ${misc:Depends},
@@ -91,18 +83,3 @@ Description: configuration management system, scalable master service
  This package provides configuration for apache2 with mod_passenger,
  suitable for large deployments. This offers better scalability than
  the "puppet-master" package.
-
-Package: puppetmaster5-passenger
-Section: oldlibs
-Architecture: all
-Depends: ${misc:Depends}, puppet-master-passenger
-Description: configuration management system, scalable master service - transitional package
- This is a transitional package, superseded by puppet-master-passenger. It can
- safely be removed.
-
-Package: puppet5-common
-Depends: puppet5, ${misc:Depends}
-Architecture: all
-Section: oldlibs
-Description: transitional dummy package
- This is a transitional dummy package. It can safely be removed.
