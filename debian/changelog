@@ -1,3 +1,10 @@
+puppet5 (5.5.10-4~bpo9+1sci9u5) scibian9; urgency=medium
+
+  * Fix inter-deps package names
+  * Remove autopkgtest
+
+ -- Rémi Palancher <remi-externe.palancher@edf.fr>  Tue, 27 Apr 2021 23:38:37 +0200
+
 puppet5 (5.5.10-4~bpo9+1sci9u4) scibian9; urgency=medium
 
   * Back to compat 10 with dh 10
