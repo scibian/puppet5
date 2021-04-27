@@ -1,11 +1,7 @@
 Source: puppet
 Section: admin
 Priority: optional
-Maintainer: Puppet Package Maintainers <pkg-puppet-devel@lists.alioth.debian.org>
-Uploaders: Micah Anderson <micah@debian.org>,
- Andrew Pollock <apollock@debian.org>,
- Stig Sandbeck Mathisen <ssm@debian.org>,
- Apollon Oikonomopoulos <apoikos@debian.org>
+Maintainer: Scibian Project <packaging@scibian.org>
 Build-Depends:
  debhelper (>= 11),
  facter,
@@ -14,8 +10,8 @@ Build-Depends:
  ruby-ronn,
  yard,
 Standards-Version: 4.3.0
-Vcs-Git: https://salsa.debian.org/puppet-team/puppet.git
-Vcs-Browser: https://salsa.debian.org/puppet-team/puppet
+Vcs-Git: https://github.com/scibian/puppet5.git
+Vcs-Browser: https://github.com/scibian/puppet5
 Homepage: https://github.com/puppetlabs/puppet
 
 Package: puppet5

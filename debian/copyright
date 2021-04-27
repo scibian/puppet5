@@ -123,6 +123,7 @@ Copyright: 2008-2013 Micah Anderson <micah@debian.org>
            2006,2007 Jamie Wilkinson <jaq@debian.org>
            2008 James Turnbull
            2007 Luke Kanies
+           2021 Scibian Project <legal@scibian.org>
 License: GPL-2
 
 Files: install.rb
